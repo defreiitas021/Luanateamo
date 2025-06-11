@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Feliz Dia dos Namorados 💖</title>
   <style>
+    /* Estilo base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
     /* Splash Screen */
     #splash {
       position: fixed;
@@ -12,7 +27,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: linear-gradient(to right, #ff4d4d, #ff9999);
+      background-color: #000;
       color: white;
       display: flex;
       flex-direction: column;
@@ -38,7 +53,7 @@
       border-radius: 12px;
       cursor: pointer;
       font-weight: bold;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
       transition: transform 0.2s;
       z-index: 2;
     }
@@ -47,13 +62,23 @@
       transform: scale(1.05);
     }
 
+    /* Corações flutuantes */
+    #hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
     .heart {
       position: absolute;
-      color: white;
       font-size: 2rem;
+      color: #ff4d4d;
+      opacity: 0.9;
       animation: floatHeart 6s linear infinite;
-      opacity: 0.8;
-      pointer-events: none;
     }
 
     @keyframes floatHeart {
@@ -70,14 +95,18 @@
       }
     }
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #ff4d4d, #ff9999);
-      color: #fff;
-      text-align: center;
+    /* Conteúdo principal */
+    #conteudo {
+      opacity: 0;
+      transition: opacity 1s ease;
+      position: relative;
+      z-index: 2;
       padding: 2rem;
+      text-align: center;
+    }
+
+    #conteudo.visible {
+      opacity: 1;
     }
 
     h1 {
@@ -90,13 +119,13 @@
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
       max-width: 1000px;
-      margin: 0 auto 2rem auto;
+      margin: 2rem auto;
     }
 
     .photo-grid img {
       width: 100%;
       border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
       object-fit: cover;
     }
 
@@ -113,27 +142,21 @@
       font-size: 1.3rem;
       font-style: italic;
       font-weight: bold;
-      text-transform: uppercase;
       font-family: 'Georgia', serif;
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.1);
       padding: 1rem;
       border-radius: 15px;
-      margin-bottom: 2rem;
+      margin: 2rem auto;
+      max-width: 600px;
     }
 
     .footer {
       font-size: 0.9rem;
       opacity: 0.7;
       margin-top: 2rem;
-    }
-
-    #conteudo {
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
-
-    #conteudo.visible {
-      opacity: 1;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
   </style>
 </head>
@@ -141,7 +164,7 @@
   <!-- Corações flutuantes -->
   <div id="hearts-container"></div>
 
-  <!-- Splash -->
+  <!-- Splash Screen -->
   <div id="splash">
     <h2>Para o amor da minha vida 💌</h2>
     <button onclick="fecharSplash()">Clique para abrir</button>
@@ -178,11 +201,12 @@
       O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.
       Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.
       O amor não se alegra com a injustiça, mas se alegra com a verdade.
-      1 Coríntios 13:4-7 ❤️
+      <br>1 Coríntios 13:4-7 ❤️
     </div>
   </div>
 
   <script>
+    // Fecha splash
     function fecharSplash() {
       const splash = document.getElementById('splash');
       const conteudo = document.getElementById('conteudo');
@@ -195,6 +219,7 @@
       }, 1000);
     }
 
+    // Contador de tempo juntos
     const startDate = new Date('2021-04-02T00:00:00');
 
     function atualizarContador() {
@@ -222,16 +247,16 @@
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
+    // Corações flutuantes constantes
     function criarCoracao() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (Math.random() * 1.5 + 1.2) + 'rem';
       heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
       heart.innerText = '❤️';
       document.getElementById('hearts-container').appendChild(heart);
-      setTimeout(() => {
-        heart.remove();
-      }, 7000);
+      setTimeout(() => heart.remove(), 7000);
     }
 
     setInterval(criarCoracao, 300);
