@@ -1,294 +1,133 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dia dos Namorados</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Luana</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
       margin: 0;
-      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff0f5;
+      color: #333;
+      overflow-x: hidden;
     }
-
-    /* Containers de páginas */
     .page {
       display: none;
-      max-width: 900px;
-      margin: 0 auto;
+      padding: 40px 20px;
+      min-height: 100vh;
+      text-align: center;
     }
-    .page.active {
+    .active {
       display: block;
     }
-
     h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #ff3366;
+      color: #ff69b4;
+      margin-bottom: 20px;
     }
-
-    /* Botões */
-    .btn-group {
-      text-align: center;
-      margin-bottom: 30px;
+    p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 20px;
     }
     button {
-      background-color: #ff3366;
+      background-color: #ff69b4;
       border: none;
       color: white;
-      padding: 12px 25px;
+      padding: 12px 24px;
+      margin: 20px;
+      border-radius: 25px;
       font-size: 1rem;
-      margin: 0 10px;
-      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s;
     }
     button:hover {
-      background-color: #e0295b;
+      background-color: #ff1493;
     }
-
-    /* Página 3 - grid imagens */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 15px;
-      margin-bottom: 40px;
-    }
-    .photo-item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 10px;
-      height: 150px;
-      cursor: pointer;
-      background: #222;
-      box-shadow: 0 0 8px rgba(255, 51, 102, 0.5);
-    }
-    .photo-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-    .photo-item:hover img {
-      transform: scale(1.1);
-    }
-    .photo-text {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(255, 51, 102, 0.85);
-      color: white;
-      padding: 10px;
-      font-size: 0.9rem;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-      text-align: center;
-      font-weight: 600;
-      user-select: none;
-    }
-    .photo-item:hover .photo-text {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* Rodapé da página 3 */
-    .footer {
-      margin-top: 3rem;
-      font-size: 1rem;
-      color: #ccc;
-      line-height: 1.4;
-      text-align: center;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* Responsividade */
-    @media (max-width: 800px) {
-      .photo-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    @media (max-width: 480px) {
-      .photo-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .photo-item {
-        height: 120px;
-      }
-    }
-
-    /* Estilos para o iframe dos vídeos */
-    #player2, #player3 {
-      width: 100%;
-      height: 400px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 10px #ff3366cc;
-    }
-
-    /* Estilo contador */
     #contador {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-weight: 600;
+      font-family: 'Georgia', serif;
       font-size: 1.2rem;
-      color: #ff5c8d;
-      background: rgba(255, 51, 102, 0.15);
-      border-radius: 10px;
-      padding: 15px 20px;
-      text-align: center;
-      margin: 15px auto 30px;
-      max-width: 600px;
-      user-select: none;
-      box-shadow: 0 0 8px #ff3366aa;
+      color: #c71585;
+      margin-top: 20px;
+    }
+    iframe {
+      width: 100%;
+      max-width: 560px;
+      height: 315px;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
-
-  <!-- Página 1 -->
   <div id="page1" class="page active">
-    <h1>Bem-vindo(a) à surpresa de Dia dos Namorados! 💕</h1>
-    <div class="btn-group">
-      <button id="btnToPage2">Continuar para o Vídeo</button>
-    </div>
+    <h1>Bem-vinda, Luana 💕</h1>
+    <p>Preparei algo especial para você. Clique no botão abaixo para começar essa pequena jornada feita com muito carinho.</p>
+    <button id="btnToPage2">Começar</button>
   </div>
 
-  <!-- Página 2 -->
   <div id="page2" class="page">
     <h1>Vídeo Especial para Você</h1>
+    <p style="text-align: center; max-width: 700px; margin: 0 auto 20px; font-size: 1.1rem;">
+      Luana, é difícil colocar em palavras o quanto você é importante para mim. Seu sorriso ilumina meus dias, sua presença me dá paz. Você é a razão de tantas alegrias e o alicerce dos meus melhores momentos. Com você, aprendi que o amor verdadeiro existe. Cada detalhe seu me encanta, cada gesto seu me conquista. Agradeço todos os dias por ter você ao meu lado. Você me inspira, me motiva, me completa. Amo você com todas as minhas forças, e sempre amarei. Obrigado por ser quem você é. 💖
+    </p>
     <div id="player2"></div>
-    <div class="btn-group">
-      <button id="btnBackToPage1">Voltar</button>
-      <button id="btnToPage3">Continuar para as Fotos</button>
-    </div>
+    <button id="btnToPage3">Próximo</button>
+    <button id="btnBackToPage1">Voltar</button>
   </div>
 
-  <!-- Página 3 -->
   <div id="page3" class="page">
-    <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
-
-    <div class="photo-grid">
-      <div class="photo-item">
-        <img src="IMG-20250609-WA0775.jpg" alt="Foto 1" />
-        <div class="photo-text">Amo evoluir com você</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0007.jpg" alt="Foto 2" />
-        <div class="photo-text">Seu sorriso ilumina minha vida</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0008.jpg" alt="Foto 3" />
-        <div class="photo-text">Cada momento contigo é único</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0009.jpg" alt="Foto 4" />
-        <div class="photo-text">Te amo mais a cada dia</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0010.jpg" alt="Foto 5" />
-        <div class="photo-text">Você é tudo para mim</div>
-      </div>
-
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0011.jpg" alt="Foto 6" />
-        <div class="photo-text">Você é meu lar, onde quer que estejamos</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0012.jpg" alt="Foto 7" />
-        <div class="photo-text">Juntos somos invencíveis</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0013.jpg" alt="Foto 8" />
-        <div class="photo-text">Você me completa</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0014.jpg" alt="Foto 9" />
-        <div class="photo-text">O tempo voa com você ao meu lado</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0015.jpg" alt="Foto 10" />
-        <div class="photo-text">Você é minha notificação favorita</div>
-      </div>
-
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0016.jpg" alt="Foto 11" />
-        <div class="photo-text">Amar você é a melhor parte de mim</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0017.jpg" alt="Foto 12" />
-        <div class="photo-text">Amo nossos momentos</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0018.jpg" alt="Foto 13" />
-        <div class="photo-text">Você é meu sol mesmo nos dias nublados</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0019.jpg" alt="Foto 14" />
-        <div class="photo-text">Cada abraço seu é o meu refúgio</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0020.jpg" alt="Foto 15" />
-        <div class="photo-text">Sou grato por cada segundo ao seu lado</div>
-      </div>
-    </div>
-
+    <h1>Mais um Momento Nosso</h1>
     <div id="player3"></div>
-
-    <!-- Contador de tempo desde 2021-04-02 -->
-    <div id="contador" aria-live="polite" aria-atomic="true"></div>
-
-    <div class="btn-group">
-      <button id="btnBackToPage2">Voltar</button>
-    </div>
-
-    <div class="footer">
-      O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.<br />
-      Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.<br />
-      O amor não se alegra com a injustiça, mas se alegra com a verdade. 1 Coríntios 13:4-7 ❤️
-    </div>
+    <div id="contador"></div>
+    <button id="btnBackToPage2">Voltar</button>
   </div>
-
-  <!-- Load YouTube IFrame API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
     let player2, player3;
 
+    function loadYouTubeAPI() {
+      const tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    loadYouTubeAPI();
+
     function onYouTubeIframeAPIReady() {
       player2 = new YT.Player('player2', {
-        height: '400',
-        width: '100%',
+        height: '315',
+        width: '560',
         videoId: 'd0XG0-KgvNw',
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 1,
-          start: 105,
           rel: 0,
           modestbranding: 1,
           fs: 0,
           iv_load_policy: 3,
-          disablekb: 1
+          disablekb: 1,
+          start: 105
         },
         events: {
           'onReady': function(event) {
-            event.target.pauseVideo();
+            if(document.getElementById('page2').classList.contains('active')) {
+              event.target.playVideo();
+            } else {
+              event.target.pauseVideo();
+            }
           }
         }
       });
 
       player3 = new YT.Player('player3', {
-        height: '400',
-        width: '100%',
+        height: '315',
+        width: '560',
         videoId: 'gZBaznnqQpo',
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 1,
           rel: 0,
           modestbranding: 1,
@@ -298,98 +137,72 @@
         },
         events: {
           'onReady': function(event) {
-            event.target.pauseVideo();
+            if(document.getElementById('page3').classList.contains('active')) {
+              event.target.playVideo();
+            } else {
+              event.target.pauseVideo();
+            }
           }
         }
       });
     }
 
-    // Função para alternar páginas
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
+    document.getElementById('btnToPage2').addEventListener('click', () => {
+      document.getElementById('page1').classList.remove('active');
+      document.getElementById('page2').classList.add('active');
+      if (player2 && player2.playVideo) player2.playVideo();
+    });
 
-      if (pageId === 'page2') {
-        player3.pauseVideo();
-        player2.seekTo(105, true);
-        player2.playVideo();
-      } else if (pageId === 'page3') {
-        player2.pauseVideo();
-        player3.seekTo(0, true);
-        player3.playVideo();
-      } else {
-        player2.pauseVideo();
-        player3.pauseVideo();
-      }
+    document.getElementById('btnBackToPage1').addEventListener('click', () => {
+      document.getElementById('page2').classList.remove('active');
+      document.getElementById('page1').classList.add('active');
+      if (player2 && player2.pauseVideo) player2.pauseVideo();
+    });
+
+    document.getElementById('btnToPage3').addEventListener('click', () => {
+      document.getElementById('page2').classList.remove('active');
+      document.getElementById('page3').classList.add('active');
+      if (player3 && player3.playVideo) player3.playVideo();
+      if (player2 && player2.pauseVideo) player2.pauseVideo();
+    });
+
+    document.getElementById('btnBackToPage2').addEventListener('click', () => {
+      document.getElementById('page3').classList.remove('active');
+      document.getElementById('page2').classList.add('active');
+      if (player3 && player3.pauseVideo) player3.pauseVideo();
+      if (player2 && player2.playVideo) player2.playVideo();
+    });
+
+    // CONTADOR DE TEMPO
+    const contador = document.getElementById('contador');
+    const inicio = new Date('2021-04-02T00:00:00');
+
+    function atualizarContador() {
+      const agora = new Date();
+      let diff = agora - inicio;
+
+      const anos = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+      diff -= anos * 1000 * 60 * 60 * 24 * 365.25;
+
+      const meses = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.4375));
+      diff -= meses * 1000 * 60 * 60 * 24 * 30.4375;
+
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff -= dias * 1000 * 60 * 60 * 24;
+
+      const horas = Math.floor(diff / (1000 * 60 * 60));
+      diff -= horas * 1000 * 60 * 60;
+
+      const minutos = Math.floor(diff / (1000 * 60));
+      diff -= minutos * 1000 * 60;
+
+      const segundos = Math.floor(diff / 1000);
+
+      contador.innerText = `Estamos juntos há: ${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos 💖`;
     }
 
-    // Eventos dos botões
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('btnToPage2').addEventListener('click', () => showPage('page2'));
-      document.getElementById('btnBackToPage1').addEventListener('click', () => showPage('page1'));
-      document.getElementById('btnToPage3').addEventListener('click', () => showPage('page3'));
-      document.getElementById('btnBackToPage2').addEventListener('click', () => showPage('page2'));
-
-      // Inicializar contador na página 3
-      function updateContador() {
-        const startDate = new Date('2021-04-02T00:00:00');
-        const now = new Date();
-
-        let diff = now - startDate;
-
-        if(diff < 0){
-          document.getElementById('contador').textContent = 'A data inicial ainda não chegou.';
-          return;
-        }
-
-        // Calcular anos, meses, dias, horas, minutos, segundos
-        let years = now.getFullYear() - startDate.getFullYear();
-        let months = now.getMonth() - startDate.getMonth();
-        let days = now.getDate() - startDate.getDate();
-        let hours = now.getHours() - startDate.getHours();
-        let minutes = now.getMinutes() - startDate.getMinutes();
-        let seconds = now.getSeconds() - startDate.getSeconds();
-
-        if (seconds < 0) {
-          seconds += 60;
-          minutes--;
-        }
-        if (minutes < 0) {
-          minutes += 60;
-          hours--;
-        }
-        if (hours < 0) {
-          hours += 24;
-          days--;
-        }
-        if (days < 0) {
-          // Obter dias do mês anterior
-          const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-          days += prevMonth.getDate();
-          months--;
-        }
-        if (months < 0) {
-          months += 12;
-          years--;
-        }
-
-        const pluralize = (value, singular, plural) => value === 1 ? singular : plural;
-
-        const formatted = `${years} ${pluralize(years, 'ano', 'anos')}, ` +
-          `${months} ${pluralize(months, 'mês', 'meses')}, ` +
-          `${days} ${pluralize(days, 'dia', 'dias')}, ` +
-          `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-        document.getElementById('contador').textContent = `Tempo desde 02/04/2021: ${formatted}`;
-      }
-
-      // Atualiza contador a cada segundo, mas só exibe na página 3
-      setInterval(() => {
-        if(document.getElementById('page3').classList.contains('active')) {
-          updateContador();
-        }
-      }, 1000);
-    });
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
   </script>
 </body>
 </html>
