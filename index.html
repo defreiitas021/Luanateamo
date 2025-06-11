@@ -104,57 +104,48 @@
       margin: 2rem auto;
     }
 
-    /* Novo: container para cada imagem */
     .photo-item {
       position: relative;
-      background: white;
+      cursor: pointer;
       border-radius: 15px;
       overflow: hidden;
-      cursor: pointer;
-      height: 250px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .photo-item img {
       width: 100%;
-      height: 100%;
+      height: 250px;
       object-fit: cover;
       border-radius: 15px;
+      transition: opacity 0.3s ease;
       display: block;
-      transition: transform 0.3s ease;
     }
 
-    /* Efeito zoom na imagem ao passar o mouse */
     .photo-item:hover img {
-      transform: scale(1.1);
-      filter: brightness(0.7);
+      opacity: 0.3;
     }
 
-    /* Frase que aparece ao passar o mouse */
-    .photo-item .caption {
+    .photo-text {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       color: #000;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
       font-weight: bold;
-      font-size: 1.1rem;
-      text-align: center;
-      padding: 0 10px;
+      font-size: 1rem;
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
-      max-width: 90%;
-      line-height: 1.2;
+      width: 90%;
+      text-align: center;
       user-select: none;
     }
 
-    /* Mostrar legenda no hover */
-    .photo-item:hover .caption {
+    .photo-item:hover .photo-text {
       opacity: 1;
+      pointer-events: auto;
     }
 
     iframe {
@@ -200,67 +191,67 @@
     <div class="photo-grid">
       <div class="photo-item">
         <img src="IMG-20250609-WA0775.jpg" alt="Foto 1" />
-        <div class="caption">Nosso primeiro encontro inesquecível.</div>
+        <div class="photo-text">Nosso primeiro encontro inesquecível</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0007.jpg" alt="Foto 2" />
-        <div class="caption">Seu sorriso ilumina meus dias.</div>
+        <div class="photo-text">Momentos de pura felicidade</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0008.jpg" alt="Foto 3" />
-        <div class="caption">Momentos de alegria compartilhada.</div>
+        <div class="photo-text">Risos que iluminam meus dias</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0009.jpg" alt="Foto 4" />
-        <div class="caption">O melhor abraço do mundo.</div>
+        <div class="photo-text">Cumplicidade em cada olhar</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0010.jpg" alt="Foto 5" />
-        <div class="caption">Nossa cumplicidade em cada olhar.</div>
+        <div class="photo-text">Juntos construindo nossa história</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0011.jpg" alt="Foto 6" />
-        <div class="caption">Você, minha inspiração diária.</div>
+        <div class="photo-text">Abraços que aquecem o coração</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0012.jpg" alt="Foto 7" />
-        <div class="caption">Juntos, conquistamos o mundo.</div>
+        <div class="photo-text">Cada dia mais apaixonado</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0013.jpg" alt="Foto 8" />
-        <div class="caption">Seu amor me faz completo.</div>
+        <div class="photo-text">Memórias que guardo com carinho</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0014.jpg" alt="Foto 9" />
-        <div class="caption">Cada dia ao seu lado é um presente.</div>
+        <div class="photo-text">A magia do nosso amor</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0015.jpg" alt="Foto 10" />
-        <div class="caption">Nossa história escrita com amor.</div>
+        <div class="photo-text">Sorrisos que nunca vão se apagar</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0016.jpg" alt="Foto 11" />
-        <div class="caption">Você é minha melhor companhia.</div>
+        <div class="photo-text">Nosso abraço perfeito</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0017.jpg" alt="Foto 12" />
-        <div class="caption">Amor que cresce a cada dia.</div>
+        <div class="photo-text">Você é meu porto seguro</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0018.jpg" alt="Foto 13" />
-        <div class="caption">Nosso carinho, nosso lar.</div>
+        <div class="photo-text">Amor que só cresce</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0019.jpg" alt="Foto 14" />
-        <div class="caption">Você é meu sonho realizado.</div>
+        <div class="photo-text">Nosso segredo mais doce</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0020.jpg" alt="Foto 15" />
-        <div class="caption">Cada beijo seu é magia.</div>
+        <div class="photo-text">Para sempre nós dois</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0021.jpg" alt="Foto 16" />
-        <div class="caption">Para sempre, você e eu.</div>
+        <div class="photo-text">Minha melhor metade</div>
       </div>
     </div>
 
