@@ -35,13 +35,11 @@
       z-index: 10000;
       opacity: 1;
       transition: opacity 1s ease;
-      overflow: hidden;
     }
 
     #splash h2 {
       font-size: 2.2rem;
       margin-bottom: 1.5rem;
-      z-index: 2;
     }
 
     #splash button {
@@ -53,13 +51,6 @@
       border-radius: 12px;
       cursor: pointer;
       font-weight: bold;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-      transition: transform 0.2s;
-      z-index: 2;
-    }
-
-    #splash button:hover {
-      transform: scale(1.05);
     }
 
     .heart {
@@ -73,22 +64,12 @@
     }
 
     @keyframes floatHeart {
-      0% {
-        transform: translateY(0) scale(0.5) rotate(0deg);
-        opacity: 0;
-      }
-      30% {
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-120vh) scale(1.2) rotate(360deg);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
+      30% { opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.2) rotate(360deg); opacity: 0; }
     }
 
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
     h1 {
       font-size: 2.5rem;
@@ -97,7 +78,7 @@
 
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 1rem;
       max-width: 1000px;
       margin: 2rem auto;
@@ -105,18 +86,16 @@
 
     .photo-item {
       position: relative;
-      cursor: pointer;
       border-radius: 15px;
       overflow: hidden;
     }
 
     .photo-item img {
       width: 100%;
-      height: 250px;
+      height: 200px;
       object-fit: cover;
       border-radius: 15px;
       transition: opacity 0.3s ease;
-      display: block;
     }
 
     .photo-item:hover img {
@@ -130,21 +109,18 @@
       transform: translate(-50%, -50%);
       color: #000;
       background: rgba(255, 255, 255, 0.9);
-      padding: 0.8rem 1.2rem;
+      padding: 0.5rem 1rem;
       border-radius: 12px;
       font-weight: bold;
-      font-size: 1rem;
+      font-size: 0.95rem;
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
-      width: 90%;
       text-align: center;
-      user-select: none;
     }
 
     .photo-item:hover .photo-text {
       opacity: 1;
-      pointer-events: auto;
     }
 
     #player {
@@ -160,7 +136,6 @@
       font-size: 1.3rem;
       font-style: italic;
       font-weight: bold;
-      text-transform: uppercase;
       font-family: 'Georgia', serif;
       background-color: rgba(255, 255, 255, 0.1);
       padding: 1rem;
@@ -176,20 +151,32 @@
   </style>
 </head>
 <body>
-  <!-- Splash -->
   <div id="splash">
     <h2>Para o amor da minha vida 💌</h2>
     <button onclick="fecharSplash()">Clique para abrir</button>
-    <div id="hearts-container"></div>
   </div>
 
-  <!-- Conteúdo principal -->
   <div id="conteudo" class="hidden">
     <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
 
     <div class="photo-grid">
-      <!-- suas fotos aqui (mantive como estavam no código anterior) -->
-      <!-- ... (omiti para economizar espaço, mas mantenha as divs com imagens e textos) -->
+      <!-- Repita este bloco para cada uma das 16 imagens -->
+      <div class="photo-item"><img src="img/1.jpg"><div class="photo-text">Nosso primeiro olhar mudou tudo 💘</div></div>
+      <div class="photo-item"><img src="img/2.jpg"><div class="photo-text">Seu sorriso ilumina minha vida 🌞</div></div>
+      <div class="photo-item"><img src="img/3.jpg"><div class="photo-text">Cada momento contigo é único ✨</div></div>
+      <div class="photo-item"><img src="img/4.jpg"><div class="photo-text">Te amo mais a cada dia ❤️</div></div>
+      <div class="photo-item"><img src="img/5.jpg"><div class="photo-text">Nossos risos são minha trilha sonora 🎶</div></div>
+      <div class="photo-item"><img src="img/6.jpg"><div class="photo-text">Você é meu lar, onde quer que estejamos 🏡</div></div>
+      <div class="photo-item"><img src="img/7.jpg"><div class="photo-text">Juntos somos invencíveis 💪</div></div>
+      <div class="photo-item"><img src="img/8.jpg"><div class="photo-text">Você me completa de um jeito mágico ✨</div></div>
+      <div class="photo-item"><img src="img/9.jpg"><div class="photo-text">O tempo voa com você ao meu lado ⏳</div></div>
+      <div class="photo-item"><img src="img/10.jpg"><div class="photo-text">Você é minha poesia favorita 📖</div></div>
+      <div class="photo-item"><img src="img/11.jpg"><div class="photo-text">Amar você é a melhor parte de mim 💓</div></div>
+      <div class="photo-item"><img src="img/12.jpg"><div class="photo-text">Momentos contigo são eternos ⏰</div></div>
+      <div class="photo-item"><img src="img/13.jpg"><div class="photo-text">Você é meu sol mesmo nos dias nublados 🌥</div></div>
+      <div class="photo-item"><img src="img/14.jpg"><div class="photo-text">Cada abraço seu é o meu refúgio 🤗</div></div>
+      <div class="photo-item"><img src="img/15.jpg"><div class="photo-text">Sou grato(a) por cada segundo contigo 💞</div></div>
+      <div class="photo-item"><img src="img/16.jpg"><div class="photo-text">Você é meu para sempre 💍</div></div>
     </div>
 
     <div id="player"></div>
@@ -203,10 +190,8 @@
     </div>
   </div>
 
-  <!-- Script principal -->
   <script>
     let player;
-
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
         height: '315',
@@ -219,39 +204,30 @@
           rel: 0
         },
         events: {
-          'onReady': onPlayerReady
+          'onReady': (event) => { window.playWhenReady = () => event.target.playVideo(); }
         }
       });
     }
 
-    function onPlayerReady(event) {
-      window.playWhenReady = () => event.target.playVideo();
-    }
-
     function fecharSplash() {
-      const splash = document.getElementById('splash');
-      const conteudo = document.getElementById('conteudo');
-      splash.style.opacity = 0;
+      document.getElementById('splash').style.opacity = 0;
       setTimeout(() => {
-        splash.style.display = 'none';
-        conteudo.classList.remove('hidden');
+        document.getElementById('splash').style.display = 'none';
+        document.getElementById('conteudo').classList.remove('hidden');
         if (typeof playWhenReady === 'function') playWhenReady();
       }, 1000);
     }
 
     const startDate = new Date('2021-04-02T00:00:00');
-
     function atualizarContador() {
       const agora = new Date();
       const diff = agora - startDate;
-
       const segundos = Math.floor(diff / 1000);
       const minutos = Math.floor(segundos / 60);
       const horas = Math.floor(minutos / 60);
       const dias = Math.floor(horas / 24);
       const meses = Math.floor(dias / 30.44);
       const anos = Math.floor(meses / 12);
-
       const diasRestantes = dias % 30;
       const mesesRestantes = meses % 12;
       const horasRestantes = horas % 24;
@@ -278,11 +254,10 @@
 
     setInterval(criarCoracao, 300);
 
-    // Carregar API do YouTube
+    // Carrega API YouTube
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    document.head.appendChild(tag);
   </script>
 </body>
 </html>
