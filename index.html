@@ -10,21 +10,23 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background: linear-gradient(to right, #ff4d4d, #ff9999);
       color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.6s ease;
+      z-index: 10000;
+      transition: opacity 1s ease;
+      overflow: hidden;
     }
 
     #splash h2 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       margin-bottom: 1.5rem;
+      z-index: 2;
     }
 
     #splash button {
@@ -38,24 +40,43 @@
       font-weight: bold;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
       transition: transform 0.2s;
+      z-index: 2;
     }
 
     #splash button:hover {
       transform: scale(1.05);
     }
 
-    /* Conteúdo */
+    .heart {
+      position: absolute;
+      color: white;
+      font-size: 2rem;
+      animation: floatHeart 6s linear infinite;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(100vh) scale(0.5) rotate(0deg);
+        opacity: 0;
+      }
+      30% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.2) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
     body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to right, #ff4d4d, #ff9999);
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       text-align: center;
-      min-height: 100vh;
       padding: 2rem;
     }
 
@@ -69,8 +90,7 @@
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
       max-width: 1000px;
-      width: 100%;
-      margin-bottom: 2rem;
+      margin: 0 auto 2rem auto;
     }
 
     .photo-grid img {
@@ -103,53 +123,63 @@
 
     .footer {
       font-size: 0.9rem;
-      margin-top: auto;
       opacity: 0.7;
+      margin-top: 2rem;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <!-- Splash Screen -->
+  <!-- Splash -->
   <div id="splash">
     <h2>Para o amor da minha vida 💌</h2>
     <button onclick="fecharSplash()">Clique para abrir</button>
+    <!-- corações animados -->
+    <div id="hearts-container"></div>
   </div>
 
   <!-- Conteúdo principal -->
-  <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
+  <div id="conteudo" class="hidden">
+    <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
 
-  <div class="photo-grid">
-    <img src="IMG-20250609-WA0775.jpg" alt="Foto 1" />
-    <img src="IMG-20250611-WA0007.jpg" alt="Foto 2" />
-    <img src="IMG-20250611-WA0008.jpg" alt="Foto 3" />
-    <img src="IMG-20250611-WA0009.jpg" alt="Foto 4" />
-    <img src="IMG-20250611-WA0010.jpg" alt="Foto 5" />
-    <img src="IMG-20250611-WA0011.jpg" alt="Foto 6" />
-    <img src="IMG-20250611-WA0012.jpg" alt="Foto 7" />
-    <img src="IMG-20250611-WA0013.jpg" alt="Foto 8" />
-    <img src="IMG-20250611-WA0014.jpg" alt="Foto 9" />
-    <img src="IMG-20250611-WA0015.jpg" alt="Foto 10" />
-    <img src="IMG-20250611-WA0016.jpg" alt="Foto 11" />
-    <img src="IMG-20250611-WA0017.jpg" alt="Foto 12" />
-    <img src="IMG-20250611-WA0018.jpg" alt="Foto 13" />
-    <img src="IMG-20250611-WA0019.jpg" alt="Foto 14" />
-    <img src="IMG-20250611-WA0020.jpg" alt="Foto 15" />
-    <img src="IMG-20250611-WA0021.jpg" alt="Foto 16" />
+    <div class="photo-grid">
+      <img src="IMG-20250609-WA0775.jpg" alt="Foto 1" />
+      <img src="IMG-20250611-WA0007.jpg" alt="Foto 2" />
+      <img src="IMG-20250611-WA0008.jpg" alt="Foto 3" />
+      <img src="IMG-20250611-WA0009.jpg" alt="Foto 4" />
+      <img src="IMG-20250611-WA0010.jpg" alt="Foto 5" />
+      <img src="IMG-20250611-WA0011.jpg" alt="Foto 6" />
+      <img src="IMG-20250611-WA0012.jpg" alt="Foto 7" />
+      <img src="IMG-20250611-WA0013.jpg" alt="Foto 8" />
+      <img src="IMG-20250611-WA0014.jpg" alt="Foto 9" />
+      <img src="IMG-20250611-WA0015.jpg" alt="Foto 10" />
+      <img src="IMG-20250611-WA0016.jpg" alt="Foto 11" />
+      <img src="IMG-20250611-WA0017.jpg" alt="Foto 12" />
+      <img src="IMG-20250611-WA0018.jpg" alt="Foto 13" />
+      <img src="IMG-20250611-WA0019.jpg" alt="Foto 14" />
+      <img src="IMG-20250611-WA0020.jpg" alt="Foto 15" />
+      <img src="IMG-20250611-WA0021.jpg" alt="Foto 16" />
+    </div>
+
+    <iframe src="https://www.youtube.com/embed/gZBaznnqQpo" allowfullscreen></iframe>
+
+    <div class="contador" id="contador"></div>
+
+    <div class="footer">Com amor, sempre ❤️</div>
   </div>
-
-  <iframe src="https://www.youtube.com/embed/gZBaznnqQpo" allowfullscreen></iframe>
-
-  <div class="contador" id="contador"></div>
-
-  <div class="footer">Com amor, sempre ❤️</div>
 
   <script>
     function fecharSplash() {
       const splash = document.getElementById('splash');
+      const conteudo = document.getElementById('conteudo');
       splash.style.opacity = 0;
       setTimeout(() => {
         splash.style.display = 'none';
-      }, 600);
+        conteudo.classList.remove('hidden');
+      }, 1000);
     }
 
     const startDate = new Date('2021-04-02T00:00:00');
@@ -178,6 +208,21 @@
 
     setInterval(atualizarContador, 1000);
     atualizarContador();
+
+    // gerar corações
+    function criarCoracao() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
+      heart.innerText = '❤️';
+      document.getElementById('hearts-container').appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+
+    setInterval(criarCoracao, 300);
   </script>
 </body>
 </html>
