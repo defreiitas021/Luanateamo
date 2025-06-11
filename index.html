@@ -2,120 +2,182 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Para Nós Dois</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dia dos Namorados</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #1a1a1a;
+      font-family: Arial, sans-serif;
+      background: #111;
       color: #fff;
-      overflow-x: hidden;
+      margin: 0;
+      padding: 20px;
     }
-    #splash, #pagina2, #conteudo {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      min-height: 100vh;
-      padding: 2rem;
+    #conteudo {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
       text-align: center;
-    }
-    #splash.active, #pagina2.active, #conteudo.active {
-      display: flex;
-    }
-    button {
-      margin-top: 1rem;
-      padding: 0.75rem 1.5rem;
-      background: #ff3366;
-      border: none;
-      color: white;
-      font-size: 1.1rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
+      margin-bottom: 30px;
+      color: #ff3366;
     }
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(5, 1fr);
       gap: 15px;
-      margin: 2rem 0;
+      margin-bottom: 40px;
     }
     .photo-item {
       position: relative;
       overflow: hidden;
+      border-radius: 10px;
+      height: 150px;
+      cursor: pointer;
+      background: #222;
+      box-shadow: 0 0 8px rgba(255, 51, 102, 0.5);
     }
     .photo-item img {
       width: 100%;
-      height: 200px;
+      height: 100%;
       object-fit: cover;
-      border-radius: 8px;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .photo-item:hover img {
+      transform: scale(1.1);
     }
     .photo-text {
       position: absolute;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
-      width: 100%;
-      color: #fff;
-      padding: 0.5rem;
+      left: 0;
+      right: 0;
+      background: rgba(255, 51, 102, 0.85);
+      color: white;
+      padding: 10px;
       font-size: 0.9rem;
       opacity: 0;
       transition: opacity 0.3s ease;
+      pointer-events: none;
+      text-align: center;
+      font-weight: 600;
+      user-select: none;
     }
     .photo-item:hover .photo-text {
       opacity: 1;
+      pointer-events: auto;
+    }
+    #player {
+      width: 100%;
+      max-width: 900px;
+      height: 400px;
+      background: black;
+      margin: 0 auto 40px;
     }
     .footer {
-      margin-top: 2rem;
+      margin-top: 3rem;
       font-size: 1rem;
       color: #ccc;
+      line-height: 1.4;
       text-align: center;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Responsivo: em telas pequenas, ajustar a grade para 2 ou 3 colunas */
+    @media (max-width: 800px) {
+      .photo-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .photo-item {
+        height: 120px;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="splash" class="active">
-    <h1>Clique para iniciar essa surpresa ❤️</h1>
-    <button onclick="fecharSplash()">Abrir</button>
-  </div>
-
-  <div id="pagina2">
-    <div style="max-width: 600px; margin-bottom: 2rem;">
-      <h2 style="font-size: 2rem; margin-bottom: 1rem;">✨ Um momento só nosso ✨</h2>
-      <p style="font-size: 1.1rem; color: #ccc;">
-        Esse vídeo representa um pedacinho do que sinto por você.<br>
-        Que a nossa história continue sendo escrita com amor, cumplicidade e muitos sorrisos. 💖
-      </p>
-    </div>
-    <div id="video2-container" style="width: 100%; max-width: 560px; height: 315px;"></div>
-    <div>
-      <button onclick="voltarParaSplash()">Voltar</button>
-      <button onclick="abrirConteudo()">Continuar</button>
-    </div>
-  </div>
 
   <div id="conteudo">
     <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
+
     <div class="photo-grid">
-      <div class="photo-item"><img src="IMG-20250609-WA0775.jpg"><div class="photo-text">Amo evoluir com você</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0007.jpg"><div class="photo-text">Seu sorriso ilumina minha vida</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0008.jpg"><div class="photo-text">Cada momento contigo é único</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0009.jpg"><div class="photo-text">Te amo mais a cada dia</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0010.jpg"><div class="photo-text">Você é tudo para mim</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0011.jpg"><div class="photo-text">Você é meu lar, onde quer que estejamos</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0012.jpg"><div class="photo-text">Juntos somos invencíveis</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0013.jpg"><div class="photo-text">Você me completa</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0014.jpg"><div class="photo-text">O tempo voa com você ao meu lado</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0015.jpg"><div class="photo-text">Você é minha notificação favorita</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0016.jpg"><div class="photo-text">Amar você é a melhor parte de mim</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0017.jpg"><div class="photo-text">Amo nossos momentos</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0018.jpg"><div class="photo-text">Você é meu sol mesmo nos dias nublados</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0019.jpg"><div class="photo-text">Cada abraço seu é o meu refúgio</div></div>
-      <div class="photo-item"><img src="IMG-20250611-WA0020.jpg"><div class="photo-text">Sou grato por cada segundo ao seu lado</div></div>
+      <div class="photo-item">
+        <img src="IMG-20250609-WA0775.jpg" alt="Foto 1" />
+        <div class="photo-text">Amo evoluir com você</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0007.jpg" alt="Foto 2" />
+        <div class="photo-text">Seu sorriso ilumina minha vida</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0008.jpg" alt="Foto 3" />
+        <div class="photo-text">Cada momento contigo é único</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0009.jpg" alt="Foto 4" />
+        <div class="photo-text">Te amo mais a cada dia</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0010.jpg" alt="Foto 5" />
+        <div class="photo-text">Você é tudo para mim</div>
+      </div>
+
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0011.jpg" alt="Foto 6" />
+        <div class="photo-text">Você é meu lar, onde quer que estejamos</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0012.jpg" alt="Foto 7" />
+        <div class="photo-text">Juntos somos invencíveis</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0013.jpg" alt="Foto 8" />
+        <div class="photo-text">Você me completa</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0014.jpg" alt="Foto 9" />
+        <div class="photo-text">O tempo voa com você ao meu lado</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0015.jpg" alt="Foto 10" />
+        <div class="photo-text">Você é minha notificação favorita</div>
+      </div>
+
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0016.jpg" alt="Foto 11" />
+        <div class="photo-text">Amar você é a melhor parte de mim</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0017.jpg" alt="Foto 12" />
+        <div class="photo-text">Amo nossos momentos</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0018.jpg" alt="Foto 13" />
+        <div class="photo-text">Você é meu sol mesmo nos dias nublados</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0019.jpg" alt="Foto 14" />
+        <div class="photo-text">Cada abraço seu é o meu refúgio</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0020.jpg" alt="Foto 15" />
+        <div class="photo-text">Sou grato por cada segundo ao seu lado</div>
+      </div>
     </div>
-    <div id="player"></div>
-    <p id="contador" style="margin-top: 2rem; font-size: 1.2rem;"></p>
-    <button onclick="voltarParaPagina2()">Voltar</button>
+
+    <div id="player">
+      <!-- Aqui pode vir seu vídeo embed ou player -->
+      <video id="video-player" width="100%" height="400" controls autoplay muted>
+        <source src="seu-video.mp4" type="video/mp4" />
+        Seu navegador não suporta vídeo HTML5.
+      </video>
+    </div>
+
     <div class="footer">
       O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.<br />
       Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.<br />
@@ -123,115 +185,5 @@
     </div>
   </div>
 
-  <script>
-    const splash = document.getElementById('splash');
-    const pagina2 = document.getElementById('pagina2');
-    const conteudo = document.getElementById('conteudo');
-
-    function fecharSplash() {
-      splash.classList.remove('active');
-      abrirPagina2();
-    }
-
-    function voltarParaSplash() {
-      pararVideo(player2);
-      pagina2.classList.remove('active');
-      splash.classList.add('active');
-    }
-
-    function abrirPagina2() {
-      pagina2.classList.add('active');
-      carregarYoutubeAPI(criarPlayerPagina2);
-    }
-
-    function abrirConteudo() {
-      pararVideo(player2);
-      pagina2.classList.remove('active');
-      conteudo.classList.add('active');
-      carregarYoutubeAPI(criarPlayerConteudo);
-      iniciarContador();
-    }
-
-    function voltarParaPagina2() {
-      pararVideo(playerConteudo);
-      conteudo.classList.remove('active');
-      pagina2.classList.add('active');
-      carregarYoutubeAPI(criarPlayerPagina2);
-    }
-
-    let player2, playerConteudo;
-
-    function carregarYoutubeAPI(callback) {
-      if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        document.head.appendChild(tag);
-        window.onYouTubeIframeAPIReady = callback;
-      } else {
-        callback();
-      }
-    }
-
-    function criarPlayerPagina2() {
-      if (player2) return;
-      player2 = new YT.Player('video2-container', {
-        height: '315',
-        width: '560',
-        videoId: 'd0XG0-KgvNw',
-        playerVars: {
-          autoplay: 1,
-          start: 105,
-          controls: 1,
-          modestbranding: 1,
-          rel: 0
-        }
-      });
-    }
-
-    function criarPlayerConteudo() {
-      if (playerConteudo) return;
-      playerConteudo = new YT.Player('player', {
-        height: '315',
-        width: '560',
-        videoId: 'gZBaznnqQpo',
-        playerVars: {
-          autoplay: 1,
-          controls: 1,
-          modestbranding: 1,
-          rel: 0
-        }
-      });
-    }
-
-    function pararVideo(player) {
-      if (player && typeof player.stopVideo === 'function') {
-        player.stopVideo();
-      }
-    }
-
-    const startDate = new Date('2021-04-02T00:00:00');
-    function iniciarContador() {
-      function atualizarContador() {
-        const agora = new Date();
-        const diff = agora - startDate;
-        const segundos = Math.floor(diff / 1000);
-        const minutos = Math.floor(segundos / 60);
-        const horas = Math.floor(minutos / 60);
-        const dias = Math.floor(horas / 24);
-        const meses = Math.floor(dias / 30.44);
-        const anos = Math.floor(meses / 12);
-        const mesesRestantes = meses % 12;
-        const diasRestantes = Math.floor(dias % 30.44);
-        const horasRestantes = horas % 24;
-        const minutosRestantes = minutos % 60;
-        const segundosRestantes = segundos % 60;
-        document.getElementById('contador').innerText =
-          `Estamos juntos há ${anos} anos, ${mesesRestantes} meses, ${diasRestantes} dias, ` +
-          `${horasRestantes} horas, ${minutosRestantes} minutos e ${segundosRestantes} segundos ❤️`;
-      }
-      atualizarContador();
-      setInterval(atualizarContador, 1000);
-    }
-  </script>
 </body>
 </html>
