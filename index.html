@@ -14,7 +14,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center; /* Adicionado para centralizar verticalmente */
+      justify-content: center;
     }
 
     /* Containers de páginas */
@@ -25,6 +25,59 @@
     }
     .page.active {
       display: block;
+    }
+
+    /* Modal de senha */
+    .password-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .password-container {
+      background: #222;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255,51,102,0.5);
+      max-width: 400px;
+      width: 90%;
+    }
+    .password-container h2 {
+      color: #ff3366;
+      margin-bottom: 20px;
+    }
+    .password-container input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1rem;
+    }
+    .password-container button {
+      background-color: #ff3366;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .password-container button:hover {
+      background-color: #e0295b;
+    }
+    .error-message {
+      color: #ff3366;
+      margin-top: 10px;
+      display: none;
     }
 
     h1 {
@@ -156,6 +209,16 @@
 </head>
 <body>
 
+  <!-- Modal de Senha -->
+  <div class="password-modal" id="passwordModal">
+    <div class="password-container">
+      <h2>Digite a Senha Especial</h2>
+      <input type="password" id="passwordInput" placeholder="Qual é a nossa data especial? (DDMMAAAA)" />
+      <button id="submitPassword">Acessar</button>
+      <div class="error-message" id="errorMessage">Senha incorreta! Tente novamente.</div>
+    </div>
+  </div>
+
   <!-- Página 1 -->
   <div id="page1" class="page active">
     <h1>❤️ Para o amor da minha vida ❤️</h1>
@@ -285,6 +348,7 @@
 
   <script>
     let player2, player3;
+    const CORRECT_PASSWORD = "02042021"; // DDMMAAAA da data 02/04/2021
 
     function onYouTubeIframeAPIReady() {
       player2 = new YT.Player('player2', {
@@ -348,14 +412,42 @@
       }
     }
 
+    // Função para verificar senha
+    function checkPassword() {
+      const passwordInput = document.getElementById('passwordInput').value;
+      const errorMessage = document.getElementById('errorMessage');
+      
+      if (passwordInput === CORRECT_PASSWORD) {
+        document.getElementById('passwordModal').style.display = 'none';
+        showPage('page2');
+      } else {
+        errorMessage.style.display = 'block';
+        document.getElementById('passwordInput').value = '';
+      }
+    }
+
     // Eventos dos botões
     document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('btnToPage2').addEventListener('click', () => showPage('page2'));
+      // Botão da primeira página - mostra modal de senha
+      document.getElementById('btnToPage2').addEventListener('click', () => {
+        document.getElementById('passwordModal').style.display = 'flex';
+      });
+      
+      // Botão de submit da senha
+      document.getElementById('submitPassword').addEventListener('click', checkPassword);
+      
+      // Permitir submit com Enter
+      document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          checkPassword();
+        }
+      });
+
       document.getElementById('btnBackToPage1').addEventListener('click', () => showPage('page1'));
       document.getElementById('btnToPage3').addEventListener('click', () => showPage('page3'));
       document.getElementById('btnBackToPage2').addEventListener('click', () => showPage('page2'));
 
-      // Inicializar contador na página 3 (ALTERAÇÃO SOLICITADA)
+      // Inicializar contador na página 3
       function updateContador() {
         const startDate = new Date('2021-04-02T00:00:00');
         const now = new Date();
