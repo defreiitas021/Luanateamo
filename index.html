@@ -136,14 +136,17 @@
     /* Estilo contador */
     #contador {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-weight: 700;
-      font-size: 1.3rem;
-      color: #ff77aa;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #ff5c8d;
+      background: rgba(255, 51, 102, 0.15);
+      border-radius: 10px;
+      padding: 15px 20px;
       text-align: center;
-      margin: 20px 0 30px 0;
+      margin: 15px auto 30px;
+      max-width: 600px;
       user-select: none;
-      letter-spacing: 1px;
-      text-shadow: 0 0 5px #ff3366cc;
+      box-shadow: 0 0 8px #ff3366aa;
     }
   </style>
 </head>
@@ -238,10 +241,8 @@
 
     <div id="player3"></div>
 
-    <!-- Contador de data -->
-    <div id="contador" aria-live="polite" aria-atomic="true" role="timer">
-      Carregando contador...
-    </div>
+    <!-- Contador de tempo desde 2021-04-02 -->
+    <div id="contador" aria-live="polite" aria-atomic="true"></div>
 
     <div class="btn-group">
       <button id="btnBackToPage2">Voltar</button>
@@ -258,19 +259,17 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
-    // Variáveis para os players
     let player2, player3;
 
-    // Função chamada pela API do YouTube quando está pronta
     function onYouTubeIframeAPIReady() {
       player2 = new YT.Player('player2', {
         height: '400',
         width: '100%',
-        videoId: 'd0XG0-KgvNw', // vídeo da página 2
+        videoId: 'd0XG0-KgvNw',
         playerVars: {
           autoplay: 0,
           controls: 1,
-          start: 105,  // 1:45 em segundos
+          start: 105,
           rel: 0,
           modestbranding: 1,
           fs: 0,
@@ -279,7 +278,6 @@
         },
         events: {
           'onReady': function(event) {
-            // Não iniciar automaticamente aqui, vai iniciar quando mostrar a página
             event.target.pauseVideo();
           }
         }
@@ -288,7 +286,7 @@
       player3 = new YT.Player('player3', {
         height: '400',
         width: '100%',
-        videoId: 'gZBaznnqQpo', // vídeo da página 3
+        videoId: 'gZBaznnqQpo',
         playerVars: {
           autoplay: 0,
           controls: 1,
@@ -308,152 +306,90 @@
 
     // Função para alternar páginas
     function showPage(pageId) {
-      // Esconder todas as páginas
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-
-      // Mostrar a página selecionada
       document.getElementById(pageId).classList.add('active');
 
-      // Controlar vídeos
       if (pageId === 'page2') {
-        // Página 2: iniciar vídeo a partir de 1:45
         player3.pauseVideo();
         player2.seekTo(105, true);
         player2.playVideo();
       } else if (pageId === 'page3') {
-        // Página 3: iniciar vídeo desde o começo
         player2.pauseVideo();
         player3.seekTo(0, true);
         player3.playVideo();
       } else {
-        // Qualquer outra página: pausar ambos
         player2.pauseVideo();
         player3.pauseVideo();
       }
     }
 
-    // Função para calcular diferença detalhada entre datas
-    function diffDates(startDate, endDate) {
-      let diff = {};
+    // Eventos dos botões
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('btnToPage2').addEventListener('click', () => showPage('page2'));
+      document.getElementById('btnBackToPage1').addEventListener('click', () => showPage('page1'));
+      document.getElementById('btnToPage3').addEventListener('click', () => showPage('page3'));
+      document.getElementById('btnBackToPage2').addEventListener('click', () => showPage('page2'));
 
-      let start = new Date(startDate);
-      let end = new Date(endDate);
+      // Inicializar contador na página 3
+      function updateContador() {
+        const startDate = new Date('2021-04-02T00:00:00');
+        const now = new Date();
 
-      // Cópia para manipulação
-      let d1 = new Date(start);
-      let d2 = new Date(end);
+        let diff = now - startDate;
 
-      // Anos
-      let years = d2.getFullYear() - d1.getFullYear();
-      d1.setFullYear(d1.getFullYear() + years);
+        if(diff < 0){
+          document.getElementById('contador').textContent = 'A data inicial ainda não chegou.';
+          return;
+        }
 
-      if (d1 > d2) {
-        years--;
-        d1.setFullYear(d1.getFullYear() - 1);
-      }
-      diff.years = years;
+        // Calcular anos, meses, dias, horas, minutos, segundos
+        let years = now.getFullYear() - startDate.getFullYear();
+        let months = now.getMonth() - startDate.getMonth();
+        let days = now.getDate() - startDate.getDate();
+        let hours = now.getHours() - startDate.getHours();
+        let minutes = now.getMinutes() - startDate.getMinutes();
+        let seconds = now.getSeconds() - startDate.getSeconds();
 
-      // Meses
-      let months = d2.getMonth() - d1.getMonth();
-      if (months < 0) {
-        months += 12;
-        years--;
-      }
-      d1.setMonth(d1.getMonth() + months);
+        if (seconds < 0) {
+          seconds += 60;
+          minutes--;
+        }
+        if (minutes < 0) {
+          minutes += 60;
+          hours--;
+        }
+        if (hours < 0) {
+          hours += 24;
+          days--;
+        }
+        if (days < 0) {
+          // Obter dias do mês anterior
+          const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+          days += prevMonth.getDate();
+          months--;
+        }
+        if (months < 0) {
+          months += 12;
+          years--;
+        }
 
-      if (d1 > d2) {
-        months--;
-        d1.setMonth(d1.getMonth() - 1);
-      }
-      diff.months = months;
+        const pluralize = (value, singular, plural) => value === 1 ? singular : plural;
 
-      // Dias
-      let days = Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
-      d1.setDate(d1.getDate() + days);
-      diff.days = days;
+        const formatted = `${years} ${pluralize(years, 'ano', 'anos')}, ` +
+          `${months} ${pluralize(months, 'mês', 'meses')}, ` +
+          `${days} ${pluralize(days, 'dia', 'dias')}, ` +
+          `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-      // Horas
-      let hours = Math.floor((d2 - d1) / (1000 * 60 * 60));
-      d1.setHours(d1.getHours() + hours);
-      diff.hours = hours;
-
-      // Minutos
-      let minutes = Math.floor((d2 - d1) / (1000 * 60));
-      d1.setMinutes(d1.getMinutes() + minutes);
-      diff.minutes = minutes;
-
-      // Segundos
-      let seconds = Math.floor((d2 - d1) / 1000);
-      diff.seconds = seconds;
-
-      return diff;
-    }
-
-    // Atualiza o contador na página 3
-    function updateCounter() {
-      const contador = document.getElementById('contador');
-      const baseDate = new Date('2021-04-02T00:00:00');
-      const now = new Date();
-
-      let diff = {};
-
-      // Calcular diferença usando biblioteca interna simplificada:
-      let years = now.getFullYear() - baseDate.getFullYear();
-      let months = now.getMonth() - baseDate.getMonth();
-      let days = now.getDate() - baseDate.getDate();
-      let hours = now.getHours() - baseDate.getHours();
-      let minutes = now.getMinutes() - baseDate.getMinutes();
-      let seconds = now.getSeconds() - baseDate.getSeconds();
-
-      if (seconds < 0) {
-        seconds += 60;
-        minutes--;
-      }
-      if (minutes < 0) {
-        minutes += 60;
-        hours--;
-      }
-      if (hours < 0) {
-        hours += 24;
-        days--;
-      }
-      if (days < 0) {
-        // Ajuste para mês anterior
-        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-        days += prevMonth;
-        months--;
-      }
-      if (months < 0) {
-        months += 12;
-        years--;
+        document.getElementById('contador').textContent = `Tempo desde 02/04/2021: ${formatted}`;
       }
 
-      // Exibir texto no contador
-      contador.textContent = `Tempo juntos desde 02/04/2021: ${years} ano${years !== 1 ? 's' : ''}, ${months} mes${months !== 1 ? 'es' : ''}, ${days} dia${days !== 1 ? 's' : ''}, ${String(hours).padStart(2,'0')}h:${String(minutes).padStart(2,'0')}m:${String(seconds).padStart(2,'0')}s`;
-    }
-
-    // Atualizar contador a cada segundo
-    setInterval(() => {
-      // Só atualizar se a página 3 estiver visível
-      if(document.getElementById('page3').classList.contains('active')) {
-        updateCounter();
-      }
-    }, 1000);
-
-    // Botões de navegação
-    document.getElementById('btnToPage2').addEventListener('click', () => {
-      showPage('page2');
+      // Atualiza contador a cada segundo, mas só exibe na página 3
+      setInterval(() => {
+        if(document.getElementById('page3').classList.contains('active')) {
+          updateContador();
+        }
+      }, 1000);
     });
-    document.getElementById('btnBackToPage1').addEventListener('click', () => {
-      showPage('page1');
-    });
-    document.getElementById('btnToPage3').addEventListener('click', () => {
-      showPage('page3');
-    });
-    document.getElementById('btnBackToPage2').addEventListener('click', () => {
-      showPage('page2');
-    });
-
   </script>
 </body>
 </html>
