@@ -20,14 +20,7 @@
       margin: 0 auto;
     }
     .page.active {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      max-width: 900px;
-      margin: 0 auto;
-      height: 100vh;
-      text-align: center;
+      display: block;
     }
 
     h1 {
@@ -245,85 +238,180 @@
         <img src="IMG-20250611-WA0015.jpg" alt="Foto 10" />
         <div class="photo-text">Você é minha notificação favorita</div>
       </div>
+
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0016.jpg" alt="Foto 11" />
+        <div class="photo-text">Amar você é a melhor parte de mim</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0017.jpg" alt="Foto 12" />
+        <div class="photo-text">Amo nossos momentos</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0018.jpg" alt="Foto 13" />
+        <div class="photo-text">Você é meu sol mesmo nos dias nublados</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0019.jpg" alt="Foto 14" />
+        <div class="photo-text">Cada abraço seu é o meu refúgio</div>
+      </div>
+      <div class="photo-item">
+        <img src="IMG-20250611-WA0020.jpg" alt="Foto 15" />
+        <div class="photo-text">Sou grato por cada segundo ao seu lado</div>
+      </div>
     </div>
 
     <div id="player3"></div>
 
-    <div class="footer">
-      <p>
-        <strong>Você merece todo meu amor e mais um pouco.</strong> <br />
-        Obrigado por ser minha parceira, minha amiga e meu amor. <br />
-        Feliz Dia dos Namorados, minha gata linda! 🥰❤️
-      </p>
-    </div>
+    <!-- Contador de tempo desde 2021-04-02 -->
+    <div id="contador" aria-live="polite" aria-atomic="true"></div>
 
     <div class="btn-group">
-      <button id="btnBackToPage2">Voltar para o Vídeo</button>
-      <button id="btnBackToPage1From3">Voltar para Início</button>
+      <button id="btnBackToPage2">Voltar</button>
+    </div>
+
+    <div class="footer">
+      O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.<br />
+      Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.<br />
+      O amor não se alegra com a injustiça, mas se alegra com a verdade. 1 Coríntios 13:4-7 ❤️
     </div>
   </div>
 
-  <!-- Contador dias juntos -->
-  <div id="contador"></div>
+  <!-- Load YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
-    // Função para mostrar uma página e ocultar as outras
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(page => {
-        if (page.id === pageId) {
-          page.classList.add('active');
-        } else {
-          page.classList.remove('active');
+    let player2, player3;
+
+    function onYouTubeIframeAPIReady() {
+      player2 = new YT.Player('player2', {
+        height: '400',
+        width: '100%',
+        videoId: 'd0XG0-KgvNw',
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          start: 105,
+          rel: 0,
+          modestbranding: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          disablekb: 1
+        },
+        events: {
+          'onReady': function(event) {
+            event.target.pauseVideo();
+          }
+        }
+      });
+
+      player3 = new YT.Player('player3', {
+        height: '400',
+        width: '100%',
+        videoId: 'gZBaznnqQpo',
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          rel: 0,
+          modestbranding: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          disablekb: 1
+        },
+        events: {
+          'onReady': function(event) {
+            event.target.pauseVideo();
+          }
         }
       });
     }
 
-    // Botões para navegação entre páginas
-    document.getElementById('btnToPage2').addEventListener('click', () => {
-      showPage('page2');
-    });
+    // Função para alternar páginas
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
 
-    document.getElementById('btnBackToPage1').addEventListener('click', () => {
-      showPage('page1');
-    });
-
-    document.getElementById('btnToPage3').addEventListener('click', () => {
-      showPage('page3');
-    });
-
-    document.getElementById('btnBackToPage2').addEventListener('click', () => {
-      showPage('page2');
-    });
-
-    document.getElementById('btnBackToPage1From3').addEventListener('click', () => {
-      showPage('page1');
-    });
-
-    // Contador dias juntos
-    function calcularDiasJuntos() {
-      const dataInicio = new Date('2020-06-12T00:00:00'); // Data inicial do relacionamento
-      const hoje = new Date();
-      const diffTime = hoje - dataInicio;
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      return diffDays;
+      if (pageId === 'page2') {
+        player3.pauseVideo();
+        player2.seekTo(105, true);
+        player2.playVideo();
+      } else if (pageId === 'page3') {
+        player2.pauseVideo();
+        player3.seekTo(0, true);
+        player3.playVideo();
+      } else {
+        player2.pauseVideo();
+        player3.pauseVideo();
+      }
     }
 
-    function atualizarContador() {
-      const dias = calcularDiasJuntos();
-      const contador = document.getElementById('contador');
-      contador.textContent = `Estamos juntos há ${dias} dias. Te amo! ❤️`;
-    }
+    // Eventos dos botões
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('btnToPage2').addEventListener('click', () => showPage('page2'));
+      document.getElementById('btnBackToPage1').addEventListener('click', () => showPage('page1'));
+      document.getElementById('btnToPage3').addEventListener('click', () => showPage('page3'));
+      document.getElementById('btnBackToPage2').addEventListener('click', () => showPage('page2'));
 
-    atualizarContador();
+      // Inicializar contador na página 3
+      function updateContador() {
+        const startDate = new Date('2021-04-02T00:00:00');
+        const now = new Date();
 
-    // Vídeos do YouTube embutidos (se desejar colocar vídeos)
-    // Exemplo simples, pode substituir os IDs pelos seus vídeos
-    const player2 = document.getElementById('player2');
-    player2.innerHTML = `<iframe width="100%" height="400" src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&loop=1&playlist=5qap5aO4i9A" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        let diff = now - startDate;
 
-    const player3 = document.getElementById('player3');
-    player3.innerHTML = `<iframe width="100%" height="400" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&loop=1&playlist=jfKfPfyJRdk" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        if(diff < 0){
+          document.getElementById('contador').textContent = 'A data inicial ainda não chegou.';
+          return;
+        }
+
+        // Calcular anos, meses, dias, horas, minutos, segundos
+        let years = now.getFullYear() - startDate.getFullYear();
+        let months = now.getMonth() - startDate.getMonth();
+        let days = now.getDate() - startDate.getDate();
+        let hours = now.getHours() - startDate.getHours();
+        let minutes = now.getMinutes() - startDate.getMinutes();
+        let seconds = now.getSeconds() - startDate.getSeconds();
+
+        if (seconds < 0) {
+          seconds += 60;
+          minutes--;
+        }
+        if (minutes < 0) {
+          minutes += 60;
+          hours--;
+        }
+        if (hours < 0) {
+          hours += 24;
+          days--;
+        }
+        if (days < 0) {
+          // Obter dias do mês anterior
+          const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+          days += prevMonth.getDate();
+          months--;
+        }
+        if (months < 0) {
+          months += 12;
+          years--;
+        }
+
+        const pluralize = (value, singular, plural) => value === 1 ? singular : plural;
+
+        const formatted = `${years} ${pluralize(years, 'ano', 'anos')}, ` +
+          `${months} ${pluralize(months, 'mês', 'meses')}, ` +
+          `${days} ${pluralize(days, 'dia', 'dias')}, ` +
+          `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+        document.getElementById('contador').textContent = `Tempo desde 02/04/2021: ${formatted}`;
+      }
+
+      // Atualiza contador a cada segundo, mas só exibe na página 3
+      setInterval(() => {
+        if(document.getElementById('page3').classList.contains('active')) {
+          updateContador();
+        }
+      }, 1000);
+    });
   </script>
-
 </body>
 </html>
