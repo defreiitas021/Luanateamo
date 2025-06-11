@@ -6,58 +6,42 @@
   <title>💖 Feliz Dia dos Namorados 💖</title>
   <style>
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    body, html {
-      height: 100%;
+    body {
+      font-family: 'Segoe UI', sans-serif;
       background: #000;
       color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      /* Scroll liberado em todas as telas */
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      text-align: center;
+      padding: 2rem;
+      overflow-x: hidden;
+      /* scroll liberado */
+      overflow-y: auto;
     }
-    #splash, #textoPage, #conteudo {
+    #splash, #pagina2, #conteudo {
+      min-height: 100vh;
+    }
+    #splash {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
+      width: 100vw; height: 100vh;
       background: black;
       color: white;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
-      text-align: center;
       z-index: 10000;
       opacity: 1;
       transition: opacity 1s ease;
-      overflow-y: auto; /* Scroll ativado */
-      -webkit-overflow-scrolling: touch;
     }
-    #splash.hidden, #textoPage.hidden, #conteudo.hidden {
-      display: none;
-      opacity: 0;
-      pointer-events: none;
-      position: static;
-      height: auto;
-      width: auto;
-      background: none;
-      color: inherit;
-      z-index: initial;
-      padding: initial;
-      overflow: initial;
-    }
-
-    #splash h2, #textoPage h2 {
+    #splash h2 {
       font-size: 2.2rem;
-      margin-bottom: 2rem;
-      max-width: 90vw;
-      line-height: 1.4;
+      margin-bottom: 1.5rem;
     }
-
-    button {
+    #splash button {
       padding: 1rem 2rem;
       font-size: 1.2rem;
       background-color: white;
@@ -66,13 +50,39 @@
       border-radius: 12px;
       cursor: pointer;
       font-weight: bold;
-      margin-top: 2rem;
-      transition: background-color 0.3s ease;
     }
-    button:hover {
-      background-color: #ddd;
+    #pagina2, #conteudo {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 3rem;
     }
-
+    #pagina2.active, #conteudo.active {
+      display: flex;
+    }
+    #pagina2 iframe, #conteudo iframe {
+      border-radius: 15px;
+      max-width: 560px;
+      width: 100%;
+      height: 315px;
+      margin: 0 auto 1rem;
+    }
+    #pagina2 button {
+      margin-top: 1.5rem;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      border: none;
+      background-color: white;
+      color: black;
+      display: none; /* só aparece após o vídeo */
+    }
+    #pagina2 button.show {
+      display: inline-block;
+    }
     .heart {
       position: fixed;
       top: 100%;
@@ -81,74 +91,39 @@
       animation: floatHeart 6s linear infinite;
       pointer-events: none;
       z-index: 1;
-      user-select: none;
     }
-
     @keyframes floatHeart {
       0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
       30% { opacity: 1; }
       100% { transform: translateY(-120vh) scale(1.2) rotate(360deg); opacity: 0; }
     }
-
-    #mensagemTexto {
-      font-size: 1.5rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      max-width: 800px;
-      white-space: pre-line;
-    }
-
-    #playerTexto, #player {
-      width: 100%;
-      max-width: 560px;
-      height: 315px;
-      border-radius: 15px;
-      overflow: hidden;
-      margin: 0 auto;
-    }
-
-    /* Conteúdo final */
-    #conteudo {
-      position: relative;
-      background: #000;
-      color: white;
-      height: auto;
-      padding-bottom: 3rem;
-      overflow-y: auto; /* Scroll liberado */
-    }
-
     h1 {
       font-size: 2.5rem;
-      margin: 1.5rem 0;
+      margin-bottom: 1rem;
+      color: white;
     }
-
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 1rem;
       max-width: 1000px;
-      margin: 2rem auto;
+      margin: 2rem auto 0;
     }
-
     .photo-item {
       position: relative;
       border-radius: 15px;
       overflow: hidden;
     }
-
     .photo-item img {
       width: 100%;
       height: 200px;
       object-fit: cover;
       border-radius: 15px;
       transition: opacity 0.3s ease;
-      display: block;
     }
-
     .photo-item:hover img {
       opacity: 0.3;
     }
-
     .photo-text {
       position: absolute;
       top: 50%;
@@ -165,11 +140,9 @@
       pointer-events: none;
       text-align: center;
     }
-
     .photo-item:hover .photo-text {
       opacity: 1;
     }
-
     .contador {
       font-size: 1.3rem;
       font-style: italic;
@@ -178,36 +151,40 @@
       background-color: rgba(255, 255, 255, 0.1);
       padding: 1rem;
       border-radius: 15px;
-      margin: 2rem auto;
-      max-width: 600px;
+      margin: 1.5rem auto 2rem;
+      max-width: 560px;
+      color: white;
     }
-
     .footer {
       font-size: 0.9rem;
       opacity: 0.7;
-      margin: 3rem auto 1rem auto;
-      max-width: 600px;
-      line-height: 1.3;
+      margin-top: 2rem;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <!-- Splash screen -->
+
+  <!-- Splash inicial -->
   <div id="splash">
     <h2>Para o amor da minha vida</h2>
-    <button onclick="mostrarTextoPage()">Clique aqui</button>
+    <button onclick="fecharSplash()">Clique aqui</button>
   </div>
 
-  <!-- Página de texto + vídeo -->
-  <div id="textoPage" class="hidden">
-    <h2>💌 Uma mensagem para você, minha princesa 💕</h2>
-    <div id="mensagemTexto"></div>
-    <div id="playerTexto"></div>
-    <button id="btnContinuar" style="display:none;" onclick="mostrarConteudo()">Continuar</button>
+  <!-- Segunda página: vídeo com início em 1:45 + botão continuar -->
+  <div id="pagina2">
+    <iframe id="video2" 
+      src="https://www.youtube.com/embed/d0XG0-KgvNw?start=105&autoplay=1&controls=1&modestbranding=1&rel=0"
+      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+    </iframe>
+    <button id="btnContinuar" onclick="abrirConteudo()">Continuar</button>
   </div>
 
-  <!-- Conteúdo final -->
-  <div id="conteudo" class="hidden" tabindex="0">
+  <!-- Terceira página: conteúdo principal com fotos, vídeo, contador e texto -->
+  <div id="conteudo">
     <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
 
     <div class="photo-grid">
@@ -230,128 +207,101 @@
 
     <div id="player"></div>
 
+    <!-- Contador abaixo do vídeo -->
     <div class="contador" id="contador"></div>
 
     <div class="footer">
-      O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.
-      Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.
+      O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.<br />
+      Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.<br />
       O amor não se alegra com a injustiça, mas se alegra com a verdade. 1 Coríntios 13:4-7 ❤️
     </div>
   </div>
 
   <script>
-    // Mensagem que será exibida na página intermediária
-    const mensagem = `Minha querida princesa,\n
-Cada dia ao seu lado é um presente que nunca pensei que poderia ganhar. Você é a luz que ilumina meus dias mais escuros, o sorriso que aquece meu coração e o amor que preenche minha alma.\n
-Espero que essas palavras cheguem até você com todo o carinho que sinto.\n
-Te amo muito!`;
+    // Controle das páginas e animação corações
+    function criarCoracao() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
+      heart.innerText = '❤️';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }
+    setInterval(criarCoracao, 300);
 
-    const splash = document.getElementById('splash');
-    const textoPage = document.getElementById('textoPage');
-    const conteudo = document.getElementById('conteudo');
-    const mensagemTexto = document.getElementById('mensagemTexto');
-    const btnContinuar = document.getElementById('btnContinuar');
-
-    let playerTexto, playerFinal;
-
-    function mostrarTextoPage() {
+    // Página inicial (splash)
+    function fecharSplash() {
+      const splash = document.getElementById('splash');
       splash.style.opacity = 0;
       setTimeout(() => {
-        splash.classList.add('hidden');
-        textoPage.classList.remove('hidden');
-        mensagemTexto.innerText = mensagem;
-
-        // Removido controle de scroll
-
-        criarPlayerTexto();
+        splash.style.display = 'none';
+        abrirPagina2();
       }, 1000);
     }
 
-    function criarPlayerTexto() {
-      if(playerTexto) return; // evita múltiplos players
+    // Abrir página 2 com vídeo do minuto 1:45
+    function abrirPagina2() {
+      document.getElementById('pagina2').classList.add('active');
+      // Configura o player para escutar quando terminar para liberar botão continuar
+      const iframe = document.getElementById('video2');
+      // Usar postMessage API do YouTube para detectar fim do vídeo
+      // Precisa do player API do YouTube: vamos usar um Player API para o iframe
+      if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
+        // Carregar API YouTube Player para iframe do video2
+        const tag2 = document.createElement('script');
+        tag2.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag2);
+        window.onYouTubeIframeAPIReady = () => {
+          criarPlayerPagina2();
+        };
+      } else {
+        criarPlayerPagina2();
+      }
+    }
 
-      playerTexto = new YT.Player('playerTexto', {
-        height: '315',
-        width: '100%',
-        videoId: 'd0XG0-KgvNw', // seu vídeo
-        playerVars: {
-          autoplay: 1,
-          controls: 1,
-          modestbranding: 1,
-          rel: 0,
-          start: 105 // começa em 1:45
-        },
+    let player2;
+    function criarPlayerPagina2() {
+      player2 = new YT.Player('video2', {
         events: {
-          'onStateChange': function(event) {
-            // Quando vídeo terminar, mostra botão continuar
-            if(event.data === YT.PlayerState.ENDED) {
-              btnContinuar.style.display = 'inline-block';
-            }
-          }
+          'onStateChange': onPlayer2StateChange
         }
       });
     }
 
-    function mostrarConteudo() {
-      textoPage.classList.add('hidden');
-      conteudo.classList.remove('hidden');
-      // Removido controle de scroll
-      criarPlayerFinal();
+    function onPlayer2StateChange(event) {
+      // Estado 0 = vídeo acabou
+      if(event.data === 0) {
+        // Mostrar botão continuar
+        document.getElementById('btnContinuar').classList.add('show');
+      }
+    }
+
+    // Abrir conteúdo final (página 3)
+    function abrirConteudo() {
+      document.getElementById('pagina2').classList.remove('active');
+      document.getElementById('conteudo').classList.add('active');
+      inicializarPlayerConteudo();
       iniciarContador();
     }
 
-    function criarPlayerFinal() {
-      if(playerFinal) return;
+    // Player do vídeo da terceira página
+    let playerConteudo;
+    function inicializarPlayerConteudo() {
+      if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
+        // Carregar API YouTube Player para iframe do conteúdo
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+        window.onYouTubeIframeAPIReady = () => {
+          criarPlayerConteudo();
+        };
+      } else {
+        criarPlayerConteudo();
+      }
+    }
 
-      playerFinal = new YT.Player('player', {
+    function criarPlayerConteudo() {
+      playerConteudo = new YT.Player('player', {
         height: '315',
-        width: '100%',
-        videoId: 'd0XG0-KgvNw',
-        playerVars: {
-          autoplay: 0,
-          controls: 1,
-          modestbranding: 1,
-          rel: 0,
-          start: 105
-        }
-      });
-    }
-
-    function iniciarContador() {
-      const contador = document.getElementById('contador');
-      let numero = 10;
-      contador.innerText = `Contagem regressiva: ${numero}`;
-      let interval = setInterval(() => {
-        numero--;
-        if(numero < 1) {
-          clearInterval(interval);
-          contador.innerText = `Agora, aproveite nosso momento juntos! ❤️`;
-          return;
-        }
-        contador.innerText = `Contagem regressiva: ${numero}`;
-      }, 1000);
-    }
-
-    // Carregar API do YouTube
-    function onYouTubeIframeAPIReady() {}
-
-    // Inserção da API do YouTube
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
-
-    // Corações flutuantes (opcional)
-    function criarCoracao() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.fontSize = (Math.random() * 2 + 1) + 'rem';
-      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
-      heart.innerText = '❤️';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }
-    setInterval(criarCoracao, 400);
-  </script>
-</body>
-</html>
+        width:
