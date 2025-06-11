@@ -132,6 +132,19 @@
       overflow: hidden;
       box-shadow: 0 0 10px #ff3366cc;
     }
+
+    /* Estilo contador */
+    #contador {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #ff77aa;
+      text-align: center;
+      margin: 20px 0 30px 0;
+      user-select: none;
+      letter-spacing: 1px;
+      text-shadow: 0 0 5px #ff3366cc;
+    }
   </style>
 </head>
 <body>
@@ -225,6 +238,11 @@
 
     <div id="player3"></div>
 
+    <!-- Contador de data -->
+    <div id="contador" aria-live="polite" aria-atomic="true" role="timer">
+      Carregando contador...
+    </div>
+
     <div class="btn-group">
       <button id="btnBackToPage2">Voltar</button>
     </div>
@@ -250,7 +268,7 @@
         width: '100%',
         videoId: 'd0XG0-KgvNw', // vídeo da página 2
         playerVars: {
-          autoplay: 1,
+          autoplay: 0,
           controls: 1,
           start: 105,  // 1:45 em segundos
           rel: 0,
@@ -261,8 +279,8 @@
         },
         events: {
           'onReady': function(event) {
-            event.target.seekTo(105, true);
-            event.target.playVideo();
+            // Não iniciar automaticamente aqui, vai iniciar quando mostrar a página
+            event.target.pauseVideo();
           }
         }
       });
@@ -272,7 +290,7 @@
         width: '100%',
         videoId: 'gZBaznnqQpo', // vídeo da página 3
         playerVars: {
-          autoplay: 1,
+          autoplay: 0,
           controls: 1,
           rel: 0,
           modestbranding: 1,
@@ -282,8 +300,7 @@
         },
         events: {
           'onReady': function(event) {
-            event.target.seekTo(0, true);
-            event.target.playVideo();
+            event.target.pauseVideo();
           }
         }
       });
@@ -315,25 +332,128 @@
       }
     }
 
-    // Eventos dos botões
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('btnToPage2').addEventListener('click', () => {
-        showPage('page2');
-      });
+    // Função para calcular diferença detalhada entre datas
+    function diffDates(startDate, endDate) {
+      let diff = {};
 
-      document.getElementById('btnBackToPage1').addEventListener('click', () => {
-        showPage('page1');
-      });
+      let start = new Date(startDate);
+      let end = new Date(endDate);
 
-      document.getElementById('btnToPage3').addEventListener('click', () => {
-        showPage('page3');
-      });
+      // Cópia para manipulação
+      let d1 = new Date(start);
+      let d2 = new Date(end);
 
-      document.getElementById('btnBackToPage2').addEventListener('click', () => {
-        showPage('page2');
-      });
+      // Anos
+      let years = d2.getFullYear() - d1.getFullYear();
+      d1.setFullYear(d1.getFullYear() + years);
+
+      if (d1 > d2) {
+        years--;
+        d1.setFullYear(d1.getFullYear() - 1);
+      }
+      diff.years = years;
+
+      // Meses
+      let months = d2.getMonth() - d1.getMonth();
+      if (months < 0) {
+        months += 12;
+        years--;
+      }
+      d1.setMonth(d1.getMonth() + months);
+
+      if (d1 > d2) {
+        months--;
+        d1.setMonth(d1.getMonth() - 1);
+      }
+      diff.months = months;
+
+      // Dias
+      let days = Math.floor((d2 - d1) / (1000 * 60 * 60 * 24));
+      d1.setDate(d1.getDate() + days);
+      diff.days = days;
+
+      // Horas
+      let hours = Math.floor((d2 - d1) / (1000 * 60 * 60));
+      d1.setHours(d1.getHours() + hours);
+      diff.hours = hours;
+
+      // Minutos
+      let minutes = Math.floor((d2 - d1) / (1000 * 60));
+      d1.setMinutes(d1.getMinutes() + minutes);
+      diff.minutes = minutes;
+
+      // Segundos
+      let seconds = Math.floor((d2 - d1) / 1000);
+      diff.seconds = seconds;
+
+      return diff;
+    }
+
+    // Atualiza o contador na página 3
+    function updateCounter() {
+      const contador = document.getElementById('contador');
+      const baseDate = new Date('2021-04-02T00:00:00');
+      const now = new Date();
+
+      let diff = {};
+
+      // Calcular diferença usando biblioteca interna simplificada:
+      let years = now.getFullYear() - baseDate.getFullYear();
+      let months = now.getMonth() - baseDate.getMonth();
+      let days = now.getDate() - baseDate.getDate();
+      let hours = now.getHours() - baseDate.getHours();
+      let minutes = now.getMinutes() - baseDate.getMinutes();
+      let seconds = now.getSeconds() - baseDate.getSeconds();
+
+      if (seconds < 0) {
+        seconds += 60;
+        minutes--;
+      }
+      if (minutes < 0) {
+        minutes += 60;
+        hours--;
+      }
+      if (hours < 0) {
+        hours += 24;
+        days--;
+      }
+      if (days < 0) {
+        // Ajuste para mês anterior
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        days += prevMonth;
+        months--;
+      }
+      if (months < 0) {
+        months += 12;
+        years--;
+      }
+
+      // Exibir texto no contador
+      contador.textContent = `Tempo juntos desde 02/04/2021: ${years} ano${years !== 1 ? 's' : ''}, ${months} mês${months !== 1 ? 'es' : ''}, ${days} dia${days !== 1 ? 's' : ''}, ${String(hours).padStart(2,'0')}h:${String(minutes).padStart(2,'0')}m:${String(seconds).padStart(2,'0')}s`;
+    }
+
+    // Atualizar contador a cada segundo
+    setInterval(() => {
+      // Só atualizar se a página 3 estiver visível
+      if(document.getElementById('page3').classList.contains('active')) {
+        updateCounter();
+      }
+    }, 1000);
+
+    // Botões de navegação
+    document.getElementById('btnToPage2').addEventListener('click', () => {
+      showPage('page2');
     });
-  </script>
+    document.getElementById('btnBackToPage1').addEventListener('click', () => {
+      showPage('page1');
+    });
+    document.getElementById('btnToPage3').addEventListener('click', () => {
+      showPage('page3');
+    });
+    document.getElementById('btnBackToPage2').addEventListener('click', () => {
+      showPage('page2');
+    });
 
+  </script>
 </body>
 </html>
