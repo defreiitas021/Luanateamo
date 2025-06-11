@@ -9,7 +9,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #ffc3a0, #ffafbd);
+      background: linear-gradient(to right, #ff4d4d, #ff9999); /* vermelho amor */
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -18,20 +18,28 @@
       min-height: 100vh;
       padding: 2rem;
     }
+
     h1 {
       font-size: 2.5rem;
       margin-bottom: 1rem;
     }
-    .photo {
-      width: 300px;
-      height: 300px;
-      border-radius: 20px;
-      background-image: url('https://via.placeholder.com/300x300.png?text=Foto+do+Casal');
-      background-size: cover;
-      background-position: center;
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      width: 100%;
       margin-bottom: 2rem;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
     }
+
+    .photo-grid img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      object-fit: cover;
+    }
+
     iframe {
       width: 100%;
       max-width: 560px;
@@ -40,13 +48,19 @@
       margin-bottom: 2rem;
       border-radius: 15px;
     }
+
     .contador {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
+      font-size: 1.3rem;
+      font-style: italic;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-family: 'Georgia', serif;
       background-color: rgba(255, 255, 255, 0.2);
       padding: 1rem;
       border-radius: 15px;
+      margin-bottom: 2rem;
     }
+
     .footer {
       font-size: 0.9rem;
       margin-top: auto;
@@ -57,7 +71,23 @@
 <body>
   <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
 
-  <div class="photo"></div>
+  <div class="photo-grid">
+    <img src="IMG-20250609-WA0775.jpg" alt="Foto 1" />
+    <img src="IMG-20250611-WA0007.jpg" alt="Foto 2" />
+    <img src="IMG-20250611-WA0008.jpg" alt="Foto 3" />
+    <img src="IMG-20250611-WA0009.jpg" alt="Foto 4" />
+    <img src="IMG-20250611-WA0010.jpg" alt="Foto 5" />
+    <img src="IMG-20250611-WA0011.jpg" alt="Foto 6" />
+    <img src="IMG-20250611-WA0012.jpg" alt="Foto 7" />
+    <img src="IMG-20250611-WA0013.jpg" alt="Foto 8" />
+    <img src="IMG-20250611-WA0014.jpg" alt="Foto 9" />
+    <img src="IMG-20250611-WA0015.jpg" alt="Foto 10" />
+    <img src="IMG-20250611-WA0016.jpg" alt="Foto 11" />
+    <img src="IMG-20250611-WA0017.jpg" alt="Foto 12" />
+    <img src="IMG-20250611-WA0018.jpg" alt="Foto 13" />
+    <img src="IMG-20250611-WA0019.jpg" alt="Foto 14" />
+    <img src="IMG-20250611-WA0020.jpg" alt="Foto 15" />
+  </div>
 
   <iframe src="https://www.youtube.com/embed/gZBaznnqQpo" allowfullscreen></iframe>
 
