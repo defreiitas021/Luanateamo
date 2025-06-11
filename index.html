@@ -250,7 +250,7 @@
         width: '100%',
         videoId: 'd0XG0-KgvNw', // vídeo da página 2
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 1,
           start: 105,  // 1:45 em segundos
           rel: 0,
@@ -261,8 +261,8 @@
         },
         events: {
           'onReady': function(event) {
-            // Não iniciar automaticamente aqui, vai iniciar quando mostrar a página
-            event.target.pauseVideo();
+            event.target.seekTo(105, true);
+            event.target.playVideo();
           }
         }
       });
@@ -272,7 +272,7 @@
         width: '100%',
         videoId: 'gZBaznnqQpo', // vídeo da página 3
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 1,
           rel: 0,
           modestbranding: 1,
@@ -282,7 +282,8 @@
         },
         events: {
           'onReady': function(event) {
-            event.target.pauseVideo();
+            event.target.seekTo(0, true);
+            event.target.playVideo();
           }
         }
       });
