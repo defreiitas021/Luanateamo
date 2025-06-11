@@ -52,12 +52,41 @@
       50% { opacity: 1; }
       100% { transform: translateY(-100vh); opacity: 0; }
     }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+      width: 100%;
+      max-width: 1000px;
+    }
+    .photo-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0.5rem;
+    }
+    .photo-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0.5rem;
+    }
+    .photo-text {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      text-align: center;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
   <div id="splash" class="active">
     <h1>Clique para iniciar essa surpresa ❤️</h1>
-    <button onclick="fecharSplash()" class="show">Abrir</button>
+    <button onclick="fecharSplash()">Abrir</button>
   </div>
 
   <div id="pagina2">
@@ -67,17 +96,32 @@
         Esse vídeo representa um pedacinho do que sinto por você.<br>
         Que a nossa história continue sendo escrita com amor, cumplicidade e muitos sorrisos. 💖
       </p>
-      <h3 style="font-size: 1.5rem; margin-top: 2rem;">🌹 Nosso Destino 🌹</h3>
-      <p style="font-size: 1.1rem; color: #ccc;">
-        Desde que nossos caminhos se cruzaram, meu mundo ganhou novas cores. Cada passo ao seu lado torna tudo mais bonito, mais leve e mais cheio de significado. Que possamos continuar trilhando esse caminho de mãos dadas, com o coração cheio de amor e os olhos brilhando de esperança. 💕
-      </p>
     </div>
     <div id="video2-container" style="width: 100%; max-width: 560px; height: 315px;"></div>
     <button id="btnContinuar" onclick="abrirConteudo()">Continuar</button>
   </div>
 
   <div id="conteudo">
-    <h2>Nosso vídeo especial 💞</h2>
+    <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
+
+    <div class="photo-grid">
+      <div class="photo-item"><img src="IMG-20250609-WA0775.jpg"><div class="photo-text">Amo evoluir com você</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0007.jpg"><div class="photo-text">Seu sorriso ilumina minha vida</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0008.jpg"><div class="photo-text">Cada momento contigo é único</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0009.jpg"><div class="photo-text">Te amo mais a cada dia</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0010.jpg"><div class="photo-text">Você é tudo para mim</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0011.jpg"><div class="photo-text">Você é meu lar, onde quer que estejamos</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0012.jpg"><div class="photo-text">Juntos somos invencíveis</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0013.jpg"><div class="photo-text">Você me completa</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0014.jpg"><div class="photo-text">O tempo voa com você ao meu lado</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0015.jpg"><div class="photo-text">Você é minha notificação favorita</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0016.jpg"><div class="photo-text">Amar você é a melhor parte de mim</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0017.jpg"><div class="photo-text">Amo nossos momentos</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0018.jpg"><div class="photo-text">Você é meu sol mesmo nos dias nublados</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0019.jpg"><div class="photo-text">Cada abraço seu é o meu refúgio</div></div>
+      <div class="photo-item"><img src="IMG-20250611-WA0020.jpg"><div class="photo-text">Sou grato por cada segundo ao seu lado</div></div>
+    </div>
+
     <div id="player"></div>
     <p id="contador" style="margin-top: 2rem; font-size: 1.2rem;"></p>
   </div>
