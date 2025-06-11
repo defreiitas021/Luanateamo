@@ -127,22 +127,28 @@
       margin-top: 2rem;
     }
 
-    .hidden {
-      display: none;
+    #conteudo {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #conteudo.visible {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
+  <!-- Corações flutuantes -->
+  <div id="hearts-container"></div>
+
   <!-- Splash -->
   <div id="splash">
     <h2>Para o amor da minha vida 💌</h2>
     <button onclick="fecharSplash()">Clique para abrir</button>
-    <!-- corações animados -->
-    <div id="hearts-container"></div>
   </div>
 
   <!-- Conteúdo principal -->
-  <div id="conteudo" class="hidden">
+  <div id="conteudo">
     <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
 
     <div class="photo-grid">
@@ -168,17 +174,24 @@
 
     <div class="contador" id="contador"></div>
 
-    <div class="footer">O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha. Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor. O amor não se alegra com a injustiça, mas se alegra com a verdade. 1 Coríntios 13:4-7 ❤️</div>
+    <div class="footer">
+      O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.
+      Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.
+      O amor não se alegra com a injustiça, mas se alegra com a verdade.
+      1 Coríntios 13:4-7 ❤️
+    </div>
   </div>
 
   <script>
     function fecharSplash() {
       const splash = document.getElementById('splash');
       const conteudo = document.getElementById('conteudo');
+
       splash.style.opacity = 0;
+
       setTimeout(() => {
         splash.style.display = 'none';
-        conteudo.classList.remove('hidden');
+        conteudo.classList.add('visible');
       }, 1000);
     }
 
@@ -209,7 +222,6 @@
     setInterval(atualizarContador, 1000);
     atualizarContador();
 
-    // gerar corações
     function criarCoracao() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
