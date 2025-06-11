@@ -34,13 +34,6 @@
       font-size: 1.1rem;
       border-radius: 0.5rem;
       cursor: pointer;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    button.show {
-      opacity: 1;
-      pointer-events: auto;
     }
     .heart {
       position: fixed;
@@ -54,39 +47,50 @@
     }
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 2rem 0;
       width: 100%;
+      max-width: 1000px;
     }
     .photo-item {
       position: relative;
+      overflow: hidden;
+      border-radius: 10px;
     }
     .photo-item img {
       width: 100%;
+      height: auto;
+      display: block;
       border-radius: 10px;
     }
     .photo-text {
       position: absolute;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      background-color: rgba(0, 0, 0, 0.6);
-      padding: 0.5rem;
-      border-radius: 5px;
-      font-size: 0.9rem;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .photo-item:hover .photo-text {
+      opacity: 1;
     }
     .footer {
-      margin-top: 3rem;
+      margin-top: 2rem;
       font-size: 1rem;
       color: #ccc;
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <div id="splash" class="active">
     <h1>Clique para iniciar essa surpresa ❤️</h1>
-    <button onclick="fecharSplash()" class="show">Abrir</button>
+    <button onclick="fecharSplash()">Abrir</button>
   </div>
 
   <div id="pagina2">
@@ -98,7 +102,7 @@
       </p>
     </div>
     <div id="video2-container" style="width: 100%; max-width: 560px; height: 315px;"></div>
-    <button id="btnContinuar" onclick="abrirConteudo()">Continuar</button>
+    <button id="btnContinuar" class="show" onclick="abrirConteudo()">Continuar</button>
   </div>
 
   <div id="conteudo">
@@ -124,6 +128,7 @@
 
     <div id="player"></div>
     <p id="contador" style="margin-top: 2rem; font-size: 1.2rem;"></p>
+
     <div class="footer">
       O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.<br />
       Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.<br />
@@ -154,7 +159,6 @@
 
     function abrirPagina2() {
       document.getElementById('pagina2').classList.add('active');
-
       if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -177,17 +181,8 @@
           controls: 1,
           modestbranding: 1,
           rel: 0
-        },
-        events: {
-          'onStateChange': onPlayer2StateChange
         }
       });
-    }
-
-    function onPlayer2StateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        document.getElementById('btnContinuar').classList.add('show');
-      }
     }
 
     function abrirConteudo() {
