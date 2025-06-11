@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>💖 Feliz Dia dos Namorados 💖</title>
   <style>
+    /* Seu CSS atual */
+
     * {
       margin: 0;
       padding: 0;
@@ -76,6 +78,7 @@
       margin-bottom: 1rem;
     }
 
+    /* Galeria de fotos */
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -148,6 +151,39 @@
       opacity: 0.7;
       margin-top: 2rem;
     }
+
+    /* Nova página do texto */
+
+    #page2 {
+      display: none;
+      padding: 2rem;
+      max-width: 600px;
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+
+    #page2 textarea {
+      width: 100%;
+      height: 150px;
+      padding: 1rem;
+      font-size: 1.2rem;
+      border-radius: 12px;
+      border: none;
+      resize: vertical;
+      margin-bottom: 1.5rem;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    #page2 button {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      background-color: white;
+      color: black;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -156,11 +192,20 @@
     <button onclick="fecharSplash()">Clique aqui</button>
   </div>
 
+  <!-- Nova página do texto e vídeo -->
+  <div id="page2">
+    <h1>Escreva algo para mim 💬</h1>
+    <textarea placeholder="Digite aqui o seu texto..."></textarea>
+    <button onclick="mostrarConteudo()">Enviar e continuar</button>
+    <div id="player"></div>
+  </div>
+
+  <!-- Página da galeria de fotos -->
   <div id="conteudo" class="hidden">
     <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
 
     <div class="photo-grid">
-      <!-- Repita este bloco para cada uma das 16 imagens -->
+      <!-- imagens mantidas como no seu código -->
       <div class="photo-item"><img src="IMG-20250609-WA0775.jpg"><div class="photo-text">Amo evoluir com você</div></div>
       <div class="photo-item"><img src="IMG-20250611-WA0007.jpg"><div class="photo-text">Seu sorriso ilumina minha vida</div></div>
       <div class="photo-item"><img src="IMG-20250611-WA0008.jpg"><div class="photo-text">Cada momento contigo é único</div></div>
@@ -178,8 +223,6 @@
       <div class="photo-item"><img src="IMG-20250611-WA0020.jpg"><div class="photo-text">Sou grato por cada segundo ao seu lado</div></div>
     </div>
 
-    <div id="player"></div>
-
     <div class="contador" id="contador"></div>
 
     <div class="footer">
@@ -191,72 +234,44 @@
 
   <script>
     let player;
+    let playWhenReady;
+
+    // Inicializa o player do vídeo para página 2
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
         height: '315',
         width: '100%',
-        videoId: 'gZBaznnqQpo',
+        videoId: 'd0XG0-KgvNw',
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 1,
           modestbranding: 1,
-          rel: 0
+          rel: 0,
+          start: 105 // Começa no segundo 105 = 1:45
         },
         events: {
-          'onReady': (event) => { window.playWhenReady = () => event.target.playVideo(); }
+          'onReady': (event) => {
+            event.target.playVideo();
+            playWhenReady = () => event.target.playVideo();
+          }
         }
       });
     }
 
+    // Ao clicar no botão do splash, mostrar a página do texto e vídeo
     function fecharSplash() {
       document.getElementById('splash').style.opacity = 0;
       setTimeout(() => {
         document.getElementById('splash').style.display = 'none';
-        document.getElementById('conteudo').classList.remove('hidden');
-        if (typeof playWhenReady === 'function') playWhenReady();
+        // Mostrar página 2 (texto e vídeo)
+        document.getElementById('page2').style.display = 'block';
+        // Scroll liberado, não esconder body overflow
+        document.body.style.overflowX = 'hidden';
       }, 1000);
     }
 
-    const startDate = new Date('2021-04-02T00:00:00');
-    function atualizarContador() {
-      const agora = new Date();
-      const diff = agora - startDate;
-      const segundos = Math.floor(diff / 1000);
-      const minutos = Math.floor(segundos / 60);
-      const horas = Math.floor(minutos / 60);
-      const dias = Math.floor(horas / 24);
-      const meses = Math.floor(dias / 30.44);
-      const anos = Math.floor(meses / 12);
-      const diasRestantes = dias % 30;
-      const mesesRestantes = meses % 12;
-      const horasRestantes = horas % 24;
-      const minutosRestantes = minutos % 60;
-      const segundosRestantes = segundos % 60;
-
-      document.getElementById('contador').innerText =
-        `Estamos juntos há ${anos} anos, ${mesesRestantes} meses, ${diasRestantes} dias, ` +
-        `${horasRestantes} horas, ${minutosRestantes} minutos e ${segundosRestantes} segundos ❤️`;
-    }
-
-    setInterval(atualizarContador, 1000);
-    atualizarContador();
-
-    function criarCoracao() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
-      heart.innerText = '❤️';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
-    }
-
-    setInterval(criarCoracao, 300);
-
-    // Carrega API YouTube
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
-  </script>
-</body>
-</html>
+    // Depois do usuário digitar e clicar para continuar, mostramos as fotos
+    function mostrarConteudo() {
+      // Pega o texto digitado (se quiser usar depois, pode salvar)
+      const texto = document.querySelector('#page2 textarea').value;
+      // Aqui pode salvar o texto em loca
