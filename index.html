@@ -133,20 +133,16 @@
       box-shadow: 0 0 10px #ff3366cc;
     }
 
-    /* Estilo contador */
-    #contador {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      font-weight: 600;
-      font-size: 1.2rem;
-      color: #ff5c8d;
-      background: rgba(255, 51, 102, 0.15);
-      border-radius: 10px;
-      padding: 15px 20px;
-      text-align: center;
-      margin: 15px auto 30px;
-      max-width: 600px;
-      user-select: none;
-      box-shadow: 0 0 8px #ff3366aa;
+    /* Estilo para o texto de amor na página 2 */
+    .love-text {
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #ff6699;
+      text-align: justify;
+      max-height: 240px; /* cerca de 10 linhas */
+      overflow-y: auto;
+      padding-right: 10px; /* para scrollbar não sobrepor texto */
     }
   </style>
 </head>
@@ -163,7 +159,13 @@
   <!-- Página 2 -->
   <div id="page2" class="page">
     <h1>Vídeo Especial para Você</h1>
+
+    <div class="love-text">
+      Luana, meu amor, você é a luz que ilumina meus dias, minha inspiração constante e minha melhor amiga. Cada momento ao seu lado é um presente que guardo com carinho no coração. Amo a sua força, seu sorriso que aquece minha alma e o jeito único que só você tem de transformar tudo em magia. A cada dia que passa, meu amor por você cresce mais, tornando-se uma chama eterna que nunca se apaga. Obrigado por estar comigo nos momentos bons e ruins, por acreditar em nós e por fazer da nossa história algo tão especial. Você é a razão do meu sorriso e a batida do meu coração. Para sempre seu, com todo amor que existe em mim.
+    </div>
+
     <div id="player2"></div>
+
     <div class="btn-group">
       <button id="btnBackToPage1">Voltar</button>
       <button id="btnToPage3">Continuar para as Fotos</button>
@@ -241,8 +243,7 @@
 
     <div id="player3"></div>
 
-    <!-- Contador de tempo desde 2021-04-02 -->
-    <div id="contador" aria-live="polite" aria-atomic="true"></div>
+    <div id="contador" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align:center; color:#ff3366; margin-bottom: 20px; font-size:1.2rem;"></div>
 
     <div class="btn-group">
       <button id="btnBackToPage2">Voltar</button>
@@ -259,17 +260,19 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
+    // Variáveis para os players
     let player2, player3;
 
+    // Função chamada pela API do YouTube quando está pronta
     function onYouTubeIframeAPIReady() {
       player2 = new YT.Player('player2', {
         height: '400',
         width: '100%',
-        videoId: 'd0XG0-KgvNw',
+        videoId: 'd0XG0-KgvNw', // vídeo da página 2
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 1,
-          start: 105,
+          start: 105,  // 1:45 em segundos
           rel: 0,
           modestbranding: 1,
           fs: 0,
@@ -278,7 +281,12 @@
         },
         events: {
           'onReady': function(event) {
-            event.target.pauseVideo();
+            // Quando estiver na página 2, o vídeo deve tocar automaticamente
+            if(document.getElementById('page2').classList.contains('active')) {
+              event.target.playVideo();
+            } else {
+              event.target.pauseVideo();
+            }
           }
         }
       });
@@ -286,110 +294,94 @@
       player3 = new YT.Player('player3', {
         height: '400',
         width: '100%',
-        videoId: 'gZBaznnqQpo',
-        playerVars: {
-          autoplay: 0,
-          controls: 1,
-          rel: 0,
-          modestbranding: 1,
-          fs: 0,
-          iv_load_policy: 3,
-          disablekb: 1
-        },
-        events: {
-          'onReady': function(event) {
-            event.target.pauseVideo();
-          }
-        }
-      });
-    }
+        videoId: 'gZBaznnqQpo', // vídeo da página
 
-    // Função para alternar páginas
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
 
-      if (pageId === 'page2') {
-        player3.pauseVideo();
-        player2.seekTo(105, true);
-        player2.playVideo();
-      } else if (pageId === 'page3') {
-        player2.pauseVideo();
-        player3.seekTo(0, true);
-        player3.playVideo();
-      } else {
-        player2.pauseVideo();
-        player3.pauseVideo();
-      }
-    }
 
-    // Eventos dos botões
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('btnToPage2').addEventListener('click', () => showPage('page2'));
-      document.getElementById('btnBackToPage1').addEventListener('click', () => showPage('page1'));
-      document.getElementById('btnToPage3').addEventListener('click', () => showPage('page3'));
-      document.getElementById('btnBackToPage2').addEventListener('click', () => showPage('page2'));
 
-      // Inicializar contador na página 3
-      function updateContador() {
-        const startDate = new Date('2021-04-02T00:00:00');
-        const now = new Date();
 
-        let diff = now - startDate;
 
-        if(diff < 0){
-          document.getElementById('contador').textContent = 'A data inicial ainda não chegou.';
-          return;
-        }
+O ChatGPT disse:
+3
+playerVars: {
+autoplay: 1,
+controls: 1,
+rel: 0,
+modestbranding: 1,
+fs: 0,
+iv_load_policy: 3,
+disablekb: 1
+},
+events: {
+'onReady': function(event) {
+if(document.getElementById('page3').classList.contains('active')) {
+event.target.playVideo();
+} else {
+event.target.pauseVideo();
+}
+}
+}
+});
+}
 
-        // Calcular anos, meses, dias, horas, minutos, segundos
-        let years = now.getFullYear() - startDate.getFullYear();
-        let months = now.getMonth() - startDate.getMonth();
-        let days = now.getDate() - startDate.getDate();
-        let hours = now.getHours() - startDate.getHours();
-        let minutes = now.getMinutes() - startDate.getMinutes();
-        let seconds = now.getSeconds() - startDate.getSeconds();
+javascript
+Copiar
+Editar
+// Navegação entre páginas
+document.getElementById('btnToPage2').addEventListener('click', () => {
+  document.getElementById('page1').classList.remove('active');
+  document.getElementById('page2').classList.add('active');
+  if (player2 && player2.playVideo) player2.playVideo();
+});
 
-        if (seconds < 0) {
-          seconds += 60;
-          minutes--;
-        }
-        if (minutes < 0) {
-          minutes += 60;
-          hours--;
-        }
-        if (hours < 0) {
-          hours += 24;
-          days--;
-        }
-        if (days < 0) {
-          // Obter dias do mês anterior
-          const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-          days += prevMonth.getDate();
-          months--;
-        }
-        if (months < 0) {
-          months += 12;
-          years--;
-        }
+document.getElementById('btnBackToPage1').addEventListener('click', () => {
+  document.getElementById('page2').classList.remove('active');
+  document.getElementById('page1').classList.add('active');
+  if (player2 && player2.pauseVideo) player2.pauseVideo();
+});
 
-        const pluralize = (value, singular, plural) => value === 1 ? singular : plural;
+document.getElementById('btnToPage3').addEventListener('click', () => {
+  document.getElementById('page2').classList.remove('active');
+  document.getElementById('page3').classList.add('active');
+  if (player3 && player3.playVideo) player3.playVideo();
+  if (player2 && player2.pauseVideo) player2.pauseVideo();
+});
 
-        const formatted = `${years} ${pluralize(years, 'ano', 'anos')}, ` +
-          `${months} ${pluralize(months, 'mês', 'meses')}, ` +
-          `${days} ${pluralize(days, 'dia', 'dias')}, ` +
-          `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+document.getElementById('btnBackToPage2').addEventListener('click', () => {
+  document.getElementById('page3').classList.remove('active');
+  document.getElementById('page2').classList.add('active');
+  if (player3 && player3.pauseVideo) player3.pauseVideo();
+  if (player2 && player2.playVideo) player2.playVideo();
+});
 
-        document.getElementById('contador').textContent = `Tempo desde 02/04/2021: ${formatted}`;
-      }
+// CONTADOR DE TEMPO
+const contador = document.getElementById('contador');
+const inicio = new Date('2021-04-02T00:00:00');
 
-      // Atualiza contador a cada segundo, mas só exibe na página 3
-      setInterval(() => {
-        if(document.getElementById('page3').classList.contains('active')) {
-          updateContador();
-        }
-      }, 1000);
-    });
-  </script>
-</body>
-</html>
+function atualizarContador() {
+  const agora = new Date();
+  let diff = agora - inicio;
+
+  const anos = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+  diff -= anos * 1000 * 60 * 60 * 24 * 365.25;
+
+  const meses = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.4375));
+  diff -= meses * 1000 * 60 * 60 * 24 * 30.4375;
+
+  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+  diff -= dias * 1000 * 60 * 60 * 24;
+
+  const horas = Math.floor(diff / (1000 * 60 * 60));
+  diff -= horas * 1000 * 60 * 60;
+
+  const minutos = Math.floor(diff / (1000 * 60));
+  diff -= minutos * 1000 * 60;
+
+  const segundos = Math.floor(diff / 1000);
+
+  contador.innerText = `Estamos juntos há: ${anos} anos, ${meses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos 💖`;
+}
+
+setInterval(atualizarContador, 1000);
+atualizarContador();
+</script> </body> </html> ```
