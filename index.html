@@ -20,7 +20,6 @@
       overflow-x: hidden;
     }
 
-    /* Splash Screen */
     #splash {
       position: fixed;
       top: 0;
@@ -148,13 +147,13 @@
       pointer-events: auto;
     }
 
-    iframe {
+    #player {
       width: 100%;
       max-width: 560px;
       height: 315px;
-      border: none;
-      margin-bottom: 2rem;
+      margin: 2rem auto;
       border-radius: 15px;
+      overflow: hidden;
     }
 
     .contador {
@@ -174,10 +173,6 @@
       opacity: 0.7;
       margin-top: 2rem;
     }
-
-    #spotify-player {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -193,11 +188,11 @@
     <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
 
     <div class="photo-grid">
-      <!-- As fotos e textos estão aqui (sem alteração) -->
-      <!-- ... [mantém todos os elementos photo-item existentes] ... -->
+      <!-- suas fotos aqui (mantive como estavam no código anterior) -->
+      <!-- ... (omiti para economizar espaço, mas mantenha as divs com imagens e textos) -->
     </div>
 
-    <iframe src="https://www.youtube.com/embed/gZBaznnqQpo" allowfullscreen></iframe>
+    <div id="player"></div>
 
     <div class="contador" id="contador"></div>
 
@@ -206,32 +201,42 @@
       Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.
       O amor não se alegra com a injustiça, mas se alegra com a verdade. 1 Coríntios 13:4-7 ❤️
     </div>
-
-    <!-- Player Spotify oculto -->
-    <iframe
-      id="spotify-player"
-      src="https://open.spotify.com/embed/track/7pSSPK28StDPjPYww81y1R?utm_source=generator&autoplay=1"
-      allow="autoplay"
-    ></iframe>
   </div>
 
+  <!-- Script principal -->
   <script>
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '315',
+        width: '100%',
+        videoId: 'gZBaznnqQpo',
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          modestbranding: 1,
+          rel: 0
+        },
+        events: {
+          'onReady': onPlayerReady
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      window.playWhenReady = () => event.target.playVideo();
+    }
+
     function fecharSplash() {
       const splash = document.getElementById('splash');
       const conteudo = document.getElementById('conteudo');
-      const spotify = document.getElementById('spotify-player');
-
       splash.style.opacity = 0;
       setTimeout(() => {
         splash.style.display = 'none';
         conteudo.classList.remove('hidden');
-        spotify.style.display = 'none'; // Mantém invisível
+        if (typeof playWhenReady === 'function') playWhenReady();
       }, 1000);
-
-      // Força a tentativa de autoplay
-      const iframe = document.getElementById('spotify-player');
-      const clone = iframe.cloneNode(true);
-      iframe.parentNode.replaceChild(clone, iframe);
     }
 
     const startDate = new Date('2021-04-02T00:00:00');
@@ -268,13 +273,16 @@
       heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
       heart.innerText = '❤️';
       document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 7000);
+      setTimeout(() => heart.remove(), 7000);
     }
 
     setInterval(criarCoracao, 300);
+
+    // Carregar API do YouTube
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   </script>
 </body>
 </html>
