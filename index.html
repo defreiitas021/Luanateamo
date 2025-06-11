@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feliz Dia dos Namorados 💖</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ffc3a0, #ffafbd);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .photo {
+      width: 300px;
+      height: 300px;
+      border-radius: 20px;
+      background-image: url('https://via.placeholder.com/300x300.png?text=Foto+do+Casal');
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    iframe {
+      width: 100%;
+      max-width: 560px;
+      height: 315px;
+      border: none;
+      margin-bottom: 2rem;
+      border-radius: 15px;
+    }
+    .contador {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 1rem;
+      border-radius: 15px;
+    }
+    .footer {
+      font-size: 0.9rem;
+      margin-top: auto;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
+
+  <div class="photo"></div>
+
+  <iframe src="https://www.youtube.com/embed/gZBaznnqQpo" allowfullscreen></iframe>
+
+  <div class="contador" id="contador"></div>
+
+  <div class="footer">Com amor, sempre ❤️</div>
+
+  <script>
+    const startDate = new Date('2021-04-02T00:00:00');
+
+    function atualizarContador() {
+      const agora = new Date();
+      const diff = agora - startDate;
+
+      const segundos = Math.floor(diff / 1000);
+      const minutos = Math.floor(segundos / 60);
+      const horas = Math.floor(minutos / 60);
+      const dias = Math.floor(horas / 24);
+      const meses = Math.floor(dias / 30.44);
+      const anos = Math.floor(meses / 12);
+
+      const diasRestantes = dias % 30;
+      const mesesRestantes = meses % 12;
+      const horasRestantes = horas % 24;
+      const minutosRestantes = minutos % 60;
+      const segundosRestantes = segundos % 60;
+
+      document.getElementById('contador').innerText =
+        `Estamos juntos há ${anos} anos, ${mesesRestantes} meses, ${diasRestantes} dias, ` +
+        `${horasRestantes} horas, ${minutosRestantes} minutos e ${segundosRestantes} segundos 💞`;
+    }
+
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
+  </script>
+</body>
+</html>
