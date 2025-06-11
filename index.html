@@ -23,6 +23,16 @@
       display: block;
     }
 
+    /* CENTRALIZAÇÃO ESPECÍFICA PARA A PÁGINA 1 */
+    #page1 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 80vh;
+      text-align: center;
+    }
+
     h1 {
       text-align: center;
       margin-bottom: 30px;
@@ -232,186 +242,64 @@
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0014.jpg" alt="Foto 9" />
-        <div class="photo-text">O tempo voa com você ao meu lado</div>
+        <div class="photo-text">Nosso amor é minha fortaleza</div>
       </div>
       <div class="photo-item">
         <img src="IMG-20250611-WA0015.jpg" alt="Foto 10" />
-        <div class="photo-text">Você é minha notificação favorita</div>
-      </div>
-
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0016.jpg" alt="Foto 11" />
-        <div class="photo-text">Amar você é a melhor parte de mim</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0017.jpg" alt="Foto 12" />
-        <div class="photo-text">Amo nossos momentos</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0018.jpg" alt="Foto 13" />
-        <div class="photo-text">Você é meu sol mesmo nos dias nublados</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0019.jpg" alt="Foto 14" />
-        <div class="photo-text">Cada abraço seu é o meu refúgio</div>
-      </div>
-      <div class="photo-item">
-        <img src="IMG-20250611-WA0020.jpg" alt="Foto 15" />
-        <div class="photo-text">Sou grato por cada segundo ao seu lado</div>
+        <div class="photo-text">Com você, a vida é mais doce</div>
       </div>
     </div>
-
-    <div id="player3"></div>
-
-    <!-- Contador de tempo desde 2021-04-02 -->
-    <div id="contador" aria-live="polite" aria-atomic="true"></div>
 
     <div class="btn-group">
       <button id="btnBackToPage2">Voltar</button>
     </div>
 
     <div class="footer">
-      O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.<br />
-      Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.<br />
-      O amor não se alegra com a injustiça, mas se alegra com a verdade. 1 Coríntios 13:4-7 ❤️
+      Obrigado por ser minha namorada, minha amiga, minha confidente. Te amo, hoje e sempre! ❤️
     </div>
   </div>
 
-  <!-- Load YouTube IFrame API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-
   <script>
-    let player2, player3;
+    // Navegação entre páginas
+    const page1 = document.getElementById("page1");
+    const page2 = document.getElementById("page2");
+    const page3 = document.getElementById("page3");
 
-    function onYouTubeIframeAPIReady() {
-      player2 = new YT.Player('player2', {
-        height: '400',
-        width: '100%',
-        videoId: 'd0XG0-KgvNw',
-        playerVars: {
-          autoplay: 0,
-          controls: 1,
-          start: 105,
-          rel: 0,
-          modestbranding: 1,
-          fs: 0,
-          iv_load_policy: 3,
-          disablekb: 1
-        },
-        events: {
-          'onReady': function(event) {
-            event.target.pauseVideo();
-          }
-        }
-      });
-
-      player3 = new YT.Player('player3', {
-        height: '400',
-        width: '100%',
-        videoId: 'gZBaznnqQpo',
-        playerVars: {
-          autoplay: 0,
-          controls: 1,
-          rel: 0,
-          modestbranding: 1,
-          fs: 0,
-          iv_load_policy: 3,
-          disablekb: 1
-        },
-        events: {
-          'onReady': function(event) {
-            event.target.pauseVideo();
-          }
-        }
-      });
-    }
-
-    // Função para alternar páginas
-    function showPage(pageId) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
-
-      if (pageId === 'page2') {
-        player3.pauseVideo();
-        player2.seekTo(105, true);
-        player2.playVideo();
-      } else if (pageId === 'page3') {
-        player2.pauseVideo();
-        player3.seekTo(0, true);
-        player3.playVideo();
-      } else {
-        player2.pauseVideo();
-        player3.pauseVideo();
-      }
-    }
-
-    // Eventos dos botões
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('btnToPage2').addEventListener('click', () => showPage('page2'));
-      document.getElementById('btnBackToPage1').addEventListener('click', () => showPage('page1'));
-      document.getElementById('btnToPage3').addEventListener('click', () => showPage('page3'));
-      document.getElementById('btnBackToPage2').addEventListener('click', () => showPage('page2'));
-
-      // Inicializar contador na página 3
-      function updateContador() {
-        const startDate = new Date('2021-04-02T00:00:00');
-        const now = new Date();
-
-        let diff = now - startDate;
-
-        if(diff < 0){
-          document.getElementById('contador').textContent = 'A data inicial ainda não chegou.';
-          return;
-        }
-
-        // Calcular anos, meses, dias, horas, minutos, segundos
-        let years = now.getFullYear() - startDate.getFullYear();
-        let months = now.getMonth() - startDate.getMonth();
-        let days = now.getDate() - startDate.getDate();
-        let hours = now.getHours() - startDate.getHours();
-        let minutes = now.getMinutes() - startDate.getMinutes();
-        let seconds = now.getSeconds() - startDate.getSeconds();
-
-        if (seconds < 0) {
-          seconds += 60;
-          minutes--;
-        }
-        if (minutes < 0) {
-          minutes += 60;
-          hours--;
-        }
-        if (hours < 0) {
-          hours += 24;
-          days--;
-        }
-        if (days < 0) {
-          // Obter dias do mês anterior
-          const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-          days += prevMonth.getDate();
-          months--;
-        }
-        if (months < 0) {
-          months += 12;
-          years--;
-        }
-
-        const pluralize = (value, singular, plural) => value === 1 ? singular : plural;
-
-        const formatted = `${years} ${pluralize(years, 'ano', 'anos')}, ` +
-          `${months} ${pluralize(months, 'mês', 'meses')}, ` +
-          `${days} ${pluralize(days, 'dia', 'dias')}, ` +
-          `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-        document.getElementById('contador').textContent = `Tempo desde 02/04/2021: ${formatted}`;
-      }
-
-      // Atualiza contador a cada segundo, mas só exibe na página 3
-      setInterval(() => {
-        if(document.getElementById('page3').classList.contains('active')) {
-          updateContador();
-        }
-      }, 1000);
+    document.getElementById("btnToPage2").addEventListener("click", () => {
+      page1.classList.remove("active");
+      page2.classList.add("active");
     });
+
+    document.getElementById("btnBackToPage1").addEventListener("click", () => {
+      page2.classList.remove("active");
+      page1.classList.add("active");
+    });
+
+    document.getElementById("btnToPage3").addEventListener("click", () => {
+      page2.classList.remove("active");
+      page3.classList.add("active");
+    });
+
+    document.getElementById("btnBackToPage2").addEventListener("click", () => {
+      page3.classList.remove("active");
+      page2.classList.add("active");
+    });
+
+    // Player YouTube 2
+    function createYouTubePlayer2() {
+      const player2 = document.getElementById("player2");
+      player2.innerHTML = `
+        <iframe 
+          src="https://www.youtube.com/embed/4Z9KEBexzcM?autoplay=1&mute=1" 
+          frameborder="0" 
+          allow="autoplay; encrypted-media" 
+          allowfullscreen 
+          title="Vídeo Especial"
+        ></iframe>
+      `;
+    }
+
+    createYouTubePlayer2();
   </script>
 </body>
 </html>
