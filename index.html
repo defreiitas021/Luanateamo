@@ -205,6 +205,75 @@
       user-select: none;
       box-shadow: 0 0 8px #ff3366aa;
     }
+
+    /* Estilos do Quiz */
+    .quiz-container {
+      max-width: 600px;
+      margin: 0 auto 40px;
+      background: #1a1a1a;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
+    }
+    
+    .quiz-question {
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #ff336655;
+    }
+    
+    .quiz-question h3 {
+      color: #ff5c8d;
+      margin-bottom: 15px;
+    }
+    
+    .quiz-option {
+      display: block;
+      background: #222;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-option:hover {
+      background: #333;
+      transform: translateX(5px);
+    }
+    
+    .quiz-option.correct {
+      background: #2ecc71;
+    }
+    
+    .quiz-option.incorrect {
+      background: #e74c3c;
+    }
+    
+    .quiz-option.selected {
+      border-left: 5px solid #ff3366;
+    }
+    
+    #surpriseButton {
+      display: none;
+      margin: 30px auto;
+      background: #ff3366;
+      animation: pulse 2s infinite;
+    }
+    
+    #surpriseImage {
+      display: none;
+      max-width: 100%;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -212,8 +281,8 @@
   <!-- Modal de Senha -->
   <div class="password-modal" id="passwordModal">
     <div class="password-container">
-      <h2>Digite a Senha Especial</h2>
-      <input type="password" id="passwordInput" placeholder="Qual é a nossa data especial? (DDMMAAAA)" />
+      <h2> ❤️ Dia em que dissemos sim um para o outro ❤️ </h2>
+      <input type="password" id="passwordInput" placeholder="Nossa data de namoro (DDMMAAAA)" />
       <button id="submitPassword">Acessar</button>
       <div class="error-message" id="errorMessage">Senha incorreta! Tente novamente.</div>
     </div>
@@ -334,12 +403,71 @@
 
     <div class="btn-group">
       <button id="btnBackToPage2">Voltar</button>
+      <button id="btnToPage4">Ir para o Quiz</button>
     </div>
 
     <div class="footer">
       O amor é paciente, o amor é bondoso. Não inveja, não se vangloria, não se orgulha.<br />
       Não maltrata, não procura seus interesses, não se ira facilmente, não guarda rancor.<br />
       O amor não se alegra com a injustiça, mas se alegra com a verdade. 1 Coríntios 13:4-7 ❤️
+    </div>
+  </div>
+
+  <!-- Página 4 - Quiz -->
+  <div id="page4" class="page">
+    <h1>❤️ Quiz do Nosso Amor ❤️</h1>
+    
+    <div class="quiz-container">
+      <div class="quiz-question">
+        <h3>Já que você me ama mesmo, quero ver se você acerta essas questões. Se acertar vai ter um presente.</h3>
+        <h3>1. Qual comida que você faz que eu amo?</h3>
+        <label class="quiz-option correct-answer">
+          <input type="radio" name="q1" value="a"> a) Strogonoff
+        </label>
+        <label class="quiz-option">
+          <input type="radio" name="q1" value="b"> b) Bife frito
+        </label>
+        <label class="quiz-option">
+          <input type="radio" name="q1" value="c"> c) Macarrão
+        </label>
+      </div>
+      
+      <div class="quiz-question">
+        <h3>2. Qual foi a nossa viagem que eu mais amei?</h3>
+        <label class="quiz-option correct-answer">
+          <input type="radio" name="q2" value="a"> a) Olimpia
+        </label>
+        <label class="quiz-option">
+          <input type="radio" name="q2" value="b"> b) Guarujá
+        </label>
+        <label class="quiz-option">
+          <input type="radio" name="q2" value="c"> c) Porto Seguro
+        </label>
+      </div>
+      
+      <div class="quiz-question">
+        <h3>3. Quanto você acha que eu te amo?</h3>
+        <label class="quiz-option">
+          <input type="radio" name="q3" value="a"> a) 2
+        </label>
+        <label class="quiz-option">
+          <input type="radio" name="q3" value="b"> b) 5
+        </label>
+        <label class="quiz-option correct-answer">
+          <input type="radio" name="q3" value="c"> c) Infinito
+        </label>
+      </div>
+    </div>
+    
+    <div class="btn-group">
+      <button id="checkQuiz">Verificar Respostas</button>
+      <button id="surpriseButton" style="display:none;">✨ Abrir Surpresa ✨</button>
+    </div>
+    
+    <img id="surpriseImage" src="SUA_URL_AQUI" alt="Nossa surpresa" style="display:none;">
+    
+    <div class="btn-group">
+      <button id="btnBackToPage3">Voltar</button>
     </div>
   </div>
 
@@ -443,9 +571,39 @@
         }
       });
 
+      // Navegação
       document.getElementById('btnBackToPage1').addEventListener('click', () => showPage('page1'));
       document.getElementById('btnToPage3').addEventListener('click', () => showPage('page3'));
       document.getElementById('btnBackToPage2').addEventListener('click', () => showPage('page2'));
+      document.getElementById('btnToPage4').addEventListener('click', () => showPage('page4'));
+      document.getElementById('btnBackToPage3').addEventListener('click', () => showPage('page3'));
+
+      // Lógica do Quiz
+      document.getElementById('checkQuiz').addEventListener('click', function() {
+        const correctAnswers = document.querySelectorAll('.correct-answer');
+        let allCorrect = true;
+        
+        // Verificar cada resposta
+        correctAnswers.forEach(correctOption => {
+          const input = correctOption.querySelector('input');
+          if (!input.checked) {
+            allCorrect = false;
+          }
+        });
+        
+        if (allCorrect) {
+          this.style.display = 'none';
+          document.getElementById('surpriseButton').style.display = 'block';
+        } else {
+          alert('Tem alguma resposta errada! Tente novamente.');
+        }
+      });
+      
+      // Botão de surpresa
+      document.getElementById('surpriseButton').addEventListener('click', function() {
+        this.style.display = 'none';
+        document.getElementById('surpriseImage').style.display = 'block';
+      });
 
       // Inicializar contador na página 3
       function updateContador() {
