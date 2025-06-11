@@ -352,7 +352,7 @@
       document.getElementById('btnToPage3').addEventListener('click', () => showPage('page3'));
       document.getElementById('btnBackToPage2').addEventListener('click', () => showPage('page2'));
 
-      // Inicializar contador na página 3
+      // Inicializar contador na página 3 (ALTERAÇÃO SOLICITADA)
       function updateContador() {
         const startDate = new Date('2021-04-02T00:00:00');
         const now = new Date();
@@ -372,6 +372,7 @@
         let minutes = now.getMinutes() - startDate.getMinutes();
         let seconds = now.getSeconds() - startDate.getSeconds();
 
+        // Ajustes para valores negativos
         if (seconds < 0) {
           seconds += 60;
           minutes--;
@@ -385,7 +386,6 @@
           days--;
         }
         if (days < 0) {
-          // Obter dias do mês anterior
           const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
           days += prevMonth.getDate();
           months--;
@@ -395,14 +395,8 @@
           years--;
         }
 
-        const pluralize = (value, singular, plural) => value === 1 ? singular : plural;
-
-        const formatted = `${years} ${pluralize(years, 'ano', 'anos')}, ` +
-          `${months} ${pluralize(months, 'mês', 'meses')}, ` +
-          `${days} ${pluralize(days, 'dia', 'dias')}, ` +
-          `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-
-        document.getElementById('contador').textContent = `Tempo desde 02/04/2021: ${formatted}`;
+        document.getElementById('contador').textContent = 
+          `Juntos há ${years} anos, ${months} meses, ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos`;
       }
 
       // Atualiza contador a cada segundo, mas só exibe na página 3
