@@ -5,11 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Feliz Dia dos Namorados 💖</title>
   <style>
+    /* Splash Screen */
+    #splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, #ff4d4d, #ff9999);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease;
+    }
+
+    #splash h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    #splash button {
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      background-color: white;
+      color: #ff4d4d;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    #splash button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Conteúdo */
     body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #ff4d4d, #ff9999); /* vermelho amor */
+      background: linear-gradient(to right, #ff4d4d, #ff9999);
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -69,6 +109,13 @@
   </style>
 </head>
 <body>
+  <!-- Splash Screen -->
+  <div id="splash">
+    <h2>Para o amor da minha vida 💌</h2>
+    <button onclick="fecharSplash()">Clique para abrir</button>
+  </div>
+
+  <!-- Conteúdo principal -->
   <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
 
   <div class="photo-grid">
@@ -97,6 +144,14 @@
   <div class="footer">Com amor, sempre ❤️</div>
 
   <script>
+    function fecharSplash() {
+      const splash = document.getElementById('splash');
+      splash.style.opacity = 0;
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 600);
+    }
+
     const startDate = new Date('2021-04-02T00:00:00');
 
     function atualizarContador() {
