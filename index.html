@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Para Nós Dois</title>
   <style>
     body {
@@ -35,46 +35,30 @@
       border-radius: 0.5rem;
       cursor: pointer;
     }
-    .heart {
-      position: fixed;
-      font-size: 2rem;
-      animation: flutuar 7s linear infinite;
-    }
-    @keyframes flutuar {
-      0% { transform: translateY(100vh); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-100vh); opacity: 0; }
-    }
     .photo-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
       margin: 2rem 0;
     }
     .photo-item {
       position: relative;
       overflow: hidden;
-      aspect-ratio: 1/1;
     }
     .photo-item img {
       width: 100%;
-      height: 100%;
+      height: 200px;
       object-fit: cover;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .photo-item:hover img {
-      opacity: 1;
+      border-radius: 8px;
     }
     .photo-text {
       position: absolute;
       bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.6);
+      width: 100%;
+      color: #fff;
       padding: 0.5rem;
+      font-size: 0.9rem;
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -104,8 +88,10 @@
       </p>
     </div>
     <div id="video2-container" style="width: 100%; max-width: 560px; height: 315px;"></div>
-    <button onclick="abrirConteudo()">Continuar</button>
-    <button onclick="voltarParaSplash()">Voltar</button>
+    <div>
+      <button onclick="voltarParaSplash()">Voltar</button>
+      <button onclick="abrirConteudo()">Continuar</button>
+    </div>
   </div>
 
   <div id="conteudo">
@@ -138,45 +124,44 @@
   </div>
 
   <script>
-    function criarCoracao() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
-      heart.innerText = '❤️';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
-    }
-    setInterval(criarCoracao, 300);
+    const splash = document.getElementById('splash');
+    const pagina2 = document.getElementById('pagina2');
+    const conteudo = document.getElementById('conteudo');
 
     function fecharSplash() {
-      document.getElementById('splash').classList.remove('active');
+      splash.classList.remove('active');
       abrirPagina2();
     }
 
-    function abrirPagina2() {
-      document.getElementById('pagina2').classList.add('active');
-      carregarAPIYouTube(criarPlayerPagina2);
+    function voltarParaSplash() {
+      pararVideo(player2);
+      pagina2.classList.remove('active');
+      splash.classList.add('active');
     }
 
-    function voltarParaSplash() {
-      document.getElementById('pagina2').classList.remove('active');
-      document.getElementById('splash').classList.add('active');
+    function abrirPagina2() {
+      pagina2.classList.add('active');
+      carregarYoutubeAPI(criarPlayerPagina2);
     }
 
     function abrirConteudo() {
-      document.getElementById('pagina2').classList.remove('active');
-      document.getElementById('conteudo').classList.add('active');
-      carregarAPIYouTube(criarPlayerConteudo);
+      pararVideo(player2);
+      pagina2.classList.remove('active');
+      conteudo.classList.add('active');
+      carregarYoutubeAPI(criarPlayerConteudo);
       iniciarContador();
     }
 
     function voltarParaPagina2() {
-      document.getElementById('conteudo').classList.remove('active');
-      document.getElementById('pagina2').classList.add('active');
+      pararVideo(playerConteudo);
+      conteudo.classList.remove('active');
+      pagina2.classList.add('active');
+      carregarYoutubeAPI(criarPlayerPagina2);
     }
 
-    function carregarAPIYouTube(callback) {
+    let player2, playerConteudo;
+
+    function carregarYoutubeAPI(callback) {
       if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
@@ -188,7 +173,8 @@
     }
 
     function criarPlayerPagina2() {
-      new YT.Player('video2-container', {
+      if (player2) return;
+      player2 = new YT.Player('video2-container', {
         height: '315',
         width: '560',
         videoId: 'd0XG0-KgvNw',
@@ -203,7 +189,8 @@
     }
 
     function criarPlayerConteudo() {
-      new YT.Player('player', {
+      if (playerConteudo) return;
+      playerConteudo = new YT.Player('player', {
         height: '315',
         width: '560',
         videoId: 'gZBaznnqQpo',
@@ -214,6 +201,12 @@
           rel: 0
         }
       });
+    }
+
+    function pararVideo(player) {
+      if (player && typeof player.stopVideo === 'function') {
+        player.stopVideo();
+      }
     }
 
     const startDate = new Date('2021-04-02T00:00:00');
