@@ -49,16 +49,6 @@
       background-color: #e0295b;
     }
 
-    /* Página 2 - vídeo */
-    #player video {
-      width: 100%;
-      height: 400px;
-      background: black;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #ff3366cc;
-      margin-bottom: 20px;
-    }
-
     /* Página 3 - grid imagens */
     .photo-grid {
       display: grid;
@@ -132,6 +122,16 @@
         height: 120px;
       }
     }
+
+    /* Estilos para o iframe dos vídeos */
+    #player2, #player3 {
+      width: 100%;
+      height: 400px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px #ff3366cc;
+    }
   </style>
 </head>
 <body>
@@ -147,12 +147,7 @@
   <!-- Página 2 -->
   <div id="page2" class="page">
     <h1>Vídeo Especial para Você</h1>
-    <div id="player">
-      <video id="video2" controls muted>
-        <source src="seu-video-pagina2.mp4" type="video/mp4" />
-        Seu navegador não suporta vídeo HTML5.
-      </video>
-    </div>
+    <div id="player2"></div>
     <div class="btn-group">
       <button id="btnBackToPage1">Voltar</button>
       <button id="btnToPage3">Continuar para as Fotos</button>
@@ -228,12 +223,7 @@
       </div>
     </div>
 
-    <div id="player3">
-      <video id="video3" width="100%" height="400" controls autoplay muted>
-        <source src="seu-video-pagina3.mp4" type="video/mp4" />
-        Seu navegador não suporta vídeo HTML5.
-      </video>
-    </div>
+    <div id="player3"></div>
 
     <div class="btn-group">
       <button id="btnBackToPage2">Voltar</button>
@@ -246,62 +236,102 @@
     </div>
   </div>
 
+  <!-- Load YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
   <script>
-    // Controle das páginas
-    const page1 = document.getElementById('page1');
-    const page2 = document.getElementById('page2');
-    const page3 = document.getElementById('page3');
+    // Variáveis para os players
+    let player2, player3;
 
-    // Vídeos
-    const video2 = document.getElementById('video2');
-    const video3 = document.getElementById('video3');
+    // Função chamada pela API do YouTube quando está pronta
+    function onYouTubeIframeAPIReady() {
+      player2 = new YT.Player('player2', {
+        height: '400',
+        width: '100%',
+        videoId: 'd0XG0-KgvNw', // vídeo da página 2
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          start: 105,  // 1:45 em segundos
+          rel: 0,
+          modestbranding: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          disablekb: 1
+        },
+        events: {
+          'onReady': function(event) {
+            // Não iniciar automaticamente aqui, vai iniciar quando mostrar a página
+            event.target.pauseVideo();
+          }
+        }
+      });
 
-    // Botões
-    const btnToPage2 = document.getElementById('btnToPage2');
-    const btnBackToPage1 = document.getElementById('btnBackToPage1');
-    const btnToPage3 = document.getElementById('btnToPage3');
-    const btnBackToPage2 = document.getElementById('btnBackToPage2');
+      player3 = new YT.Player('player3', {
+        height: '400',
+        width: '100%',
+        videoId: 'gZBaznnqQpo', // vídeo da página 3
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          rel: 0,
+          modestbranding: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          disablekb: 1
+        },
+        events: {
+          'onReady': function(event) {
+            event.target.pauseVideo();
+          }
+        }
+      });
+    }
 
-    function showPage(pageToShow) {
-      // Esconde todas
-      page1.classList.remove('active');
-      page2.classList.remove('active');
-      page3.classList.remove('active');
+    // Função para alternar páginas
+    function showPage(pageId) {
+      // Esconder todas as páginas
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
 
-      // Pausa todos os vídeos
-      video2.pause();
-      video3.pause();
+      // Mostrar a página selecionada
+      document.getElementById(pageId).classList.add('active');
 
-      // Mostra a página desejada
-      pageToShow.classList.add('active');
-
-      // Reproduz vídeo da página ativa se houver
-      if (pageToShow === page2) {
-        video2.play();
-      } else if (pageToShow === page3) {
-        video3.play();
+      // Controlar vídeos
+      if (pageId === 'page2') {
+        // Página 2: iniciar vídeo a partir de 1:45
+        player3.pauseVideo();
+        player2.seekTo(105, true);
+        player2.playVideo();
+      } else if (pageId === 'page3') {
+        // Página 3: iniciar vídeo desde o começo
+        player2.pauseVideo();
+        player3.seekTo(0, true);
+        player3.playVideo();
+      } else {
+        // Qualquer outra página: pausar ambos
+        player2.pauseVideo();
+        player3.pauseVideo();
       }
     }
 
-    // Navegação
-    btnToPage2.addEventListener('click', () => {
-      showPage(page2);
-    });
+    // Eventos dos botões
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('btnToPage2').addEventListener('click', () => {
+        showPage('page2');
+      });
 
-    btnBackToPage1.addEventListener('click', () => {
-      showPage(page1);
-    });
+      document.getElementById('btnBackToPage1').addEventListener('click', () => {
+        showPage('page1');
+      });
 
-    btnToPage3.addEventListener('click', () => {
-      showPage(page3);
-    });
+      document.getElementById('btnToPage3').addEventListener('click', () => {
+        showPage('page3');
+      });
 
-    btnBackToPage2.addEventListener('click', () => {
-      showPage(page2);
+      document.getElementById('btnBackToPage2').addEventListener('click', () => {
+        showPage('page2');
+      });
     });
-
-    // Inicializa: página 1 já visível
-    showPage(page1);
   </script>
 
 </body>
