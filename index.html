@@ -12,15 +12,54 @@
       margin: 0;
       padding: 20px;
     }
-    #conteudo {
+
+    /* Containers de páginas */
+    .page {
+      display: none;
       max-width: 900px;
       margin: 0 auto;
     }
+    .page.active {
+      display: block;
+    }
+
     h1 {
       text-align: center;
       margin-bottom: 30px;
       color: #ff3366;
     }
+
+    /* Botões */
+    .btn-group {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    button {
+      background-color: #ff3366;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1rem;
+      margin: 0 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #e0295b;
+    }
+
+    /* Página 2 - vídeo */
+    #player video {
+      width: 100%;
+      height: 400px;
+      background: black;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ff3366cc;
+      margin-bottom: 20px;
+    }
+
+    /* Página 3 - grid imagens */
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -66,13 +105,8 @@
       opacity: 1;
       pointer-events: auto;
     }
-    #player {
-      width: 100%;
-      max-width: 900px;
-      height: 400px;
-      background: black;
-      margin: 0 auto 40px;
-    }
+
+    /* Rodapé da página 3 */
     .footer {
       margin-top: 3rem;
       font-size: 1rem;
@@ -84,7 +118,7 @@
       margin-right: auto;
     }
 
-    /* Responsivo: em telas pequenas, ajustar a grade para 2 ou 3 colunas */
+    /* Responsividade */
     @media (max-width: 800px) {
       .photo-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -102,7 +136,31 @@
 </head>
 <body>
 
-  <div id="conteudo">
+  <!-- Página 1 -->
+  <div id="page1" class="page active">
+    <h1>Bem-vindo(a) à surpresa de Dia dos Namorados! 💕</h1>
+    <div class="btn-group">
+      <button id="btnToPage2">Continuar para o Vídeo</button>
+    </div>
+  </div>
+
+  <!-- Página 2 -->
+  <div id="page2" class="page">
+    <h1>Vídeo Especial para Você</h1>
+    <div id="player">
+      <video id="video2" controls muted>
+        <source src="seu-video-pagina2.mp4" type="video/mp4" />
+        Seu navegador não suporta vídeo HTML5.
+      </video>
+    </div>
+    <div class="btn-group">
+      <button id="btnBackToPage1">Voltar</button>
+      <button id="btnToPage3">Continuar para as Fotos</button>
+    </div>
+  </div>
+
+  <!-- Página 3 -->
+  <div id="page3" class="page">
     <h1>Feliz Dia dos Namorados, minha princesa 💕</h1>
 
     <div class="photo-grid">
@@ -170,12 +228,15 @@
       </div>
     </div>
 
-    <div id="player">
-      <!-- Aqui pode vir seu vídeo embed ou player -->
-      <video id="video-player" width="100%" height="400" controls autoplay muted>
-        <source src="seu-video.mp4" type="video/mp4" />
+    <div id="player3">
+      <video id="video3" width="100%" height="400" controls autoplay muted>
+        <source src="seu-video-pagina3.mp4" type="video/mp4" />
         Seu navegador não suporta vídeo HTML5.
       </video>
+    </div>
+
+    <div class="btn-group">
+      <button id="btnBackToPage2">Voltar</button>
     </div>
 
     <div class="footer">
@@ -184,6 +245,64 @@
       O amor não se alegra com a injustiça, mas se alegra com a verdade. 1 Coríntios 13:4-7 ❤️
     </div>
   </div>
+
+  <script>
+    // Controle das páginas
+    const page1 = document.getElementById('page1');
+    const page2 = document.getElementById('page2');
+    const page3 = document.getElementById('page3');
+
+    // Vídeos
+    const video2 = document.getElementById('video2');
+    const video3 = document.getElementById('video3');
+
+    // Botões
+    const btnToPage2 = document.getElementById('btnToPage2');
+    const btnBackToPage1 = document.getElementById('btnBackToPage1');
+    const btnToPage3 = document.getElementById('btnToPage3');
+    const btnBackToPage2 = document.getElementById('btnBackToPage2');
+
+    function showPage(pageToShow) {
+      // Esconde todas
+      page1.classList.remove('active');
+      page2.classList.remove('active');
+      page3.classList.remove('active');
+
+      // Pausa todos os vídeos
+      video2.pause();
+      video3.pause();
+
+      // Mostra a página desejada
+      pageToShow.classList.add('active');
+
+      // Reproduz vídeo da página ativa se houver
+      if (pageToShow === page2) {
+        video2.play();
+      } else if (pageToShow === page3) {
+        video3.play();
+      }
+    }
+
+    // Navegação
+    btnToPage2.addEventListener('click', () => {
+      showPage(page2);
+    });
+
+    btnBackToPage1.addEventListener('click', () => {
+      showPage(page1);
+    });
+
+    btnToPage3.addEventListener('click', () => {
+      showPage(page3);
+    });
+
+    btnBackToPage2.addEventListener('click', () => {
+      showPage(page2);
+    });
+
+    // Inicializa: página 1 já visível
+    showPage(page1);
+  </script>
 
 </body>
 </html>
